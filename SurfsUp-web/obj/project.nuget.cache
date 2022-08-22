@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "eI+188ncd+MDGshmAcSv1KPQQ6RgMuhWNU98qL2mcjp4dh99xinrlAUM8vqRMS7tEZxGrDm4KbUXfP73u8HXNw==",
+  "dgSpecHash": "Vd1j9DCzFm6FUFXa8tLQJmIO+E8Sxdfhw1LVPClVO9hbBx5o85FRRa1tJIUwb3yoRdY7uC4nItUfpwBwiBZcyQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Silya\\Desktop\\SurfsUp\\SurfsUp.csproj",
+  "projectFilePath": "C:\\Users\\Silya\\Desktop\\SurfsUp\\SurfsUp-web\\SurfsUp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Silya\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Silya\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
