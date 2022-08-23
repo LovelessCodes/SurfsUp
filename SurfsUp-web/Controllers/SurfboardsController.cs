@@ -158,5 +158,26 @@ namespace SurfsUp.Controllers
         {
           return (_context.Surfboard?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+        
+        // POST: Surfboards/Rent/5
+        [HttpPost, ActionName("Rent")]
+        public async Task<IActionResult> Rent(int id)
+        {
+            if (_context.Surfboard == null)
+            {
+                return Problem("Entity set 'SurfboardContext.Surfboard'  is null.");
+            }
+            var surfboard = await _context.Surfboard.FindAsync(id);
+            var success = false;
+            if (surfboard != null)
+            {
+                surfboard.RentedOut = !surfboard.RentedOut;
+                _context.Surfboard.Update(surfboard);
+                success = true;
+            }
+
+            await _context.SaveChangesAsync();
+            return Json(new { updated = success });
+        }
     }
 }
