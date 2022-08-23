@@ -19,7 +19,7 @@ namespace SurfsUp.Models
         public float Width { get; set; }
 
         [Required]
-        [Required(1, 1000)]
+        [Range(1, 1000)]
         public float Volume { get; set; }
 
         [Required]
