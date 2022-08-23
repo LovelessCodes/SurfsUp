@@ -11,16 +11,4 @@ async function rentOut(id){
             console.log(resp);
         }
     });
-    // let response = await fetch.call(
-    //     window.location.origin + "/Surfboards/Rent/"+id,
-    //     {
-    //         method: 'POST'
-    //     }
-    // );
-    // if (response.ok) {
-    //     let json = await response.json();
-    //     console.log(json);
-    // } else {
-    //     alert("HTTP-Error: "+ response.status);
-    // }
 }
