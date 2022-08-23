@@ -70,7 +70,7 @@
                 @Html.DisplayFor(modelItem => item.Equipment)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RentedOut)
+                @Html.CheckBoxFor(modelItem => item.RentedOut, new {@onclick="rentOut("+ item.Id +");"})
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Silya\\Desktop\\SurfsUp\\SurfsUp.csproj": {}
+    "C:\\Users\\Silya\\Desktop\\SurfsUp\\SurfsUp-web\\SurfsUp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Silya\\Desktop\\SurfsUp\\SurfsUp.csproj": {
+    "C:\\Users\\Silya\\Desktop\\SurfsUp\\SurfsUp-web\\SurfsUp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Silya\\Desktop\\SurfsUp\\SurfsUp.csproj",
+        "projectUniqueName": "C:\\Users\\Silya\\Desktop\\SurfsUp\\SurfsUp-web\\SurfsUp.csproj",
         "projectName": "SurfsUp",
-        "projectPath": "C:\\Users\\Silya\\Desktop\\SurfsUp\\SurfsUp.csproj",
+        "projectPath": "C:\\Users\\Silya\\Desktop\\SurfsUp\\SurfsUp-web\\SurfsUp.csproj",
         "packagesPath": "C:\\Users\\Silya\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Silya\\Desktop\\SurfsUp\\obj\\",
+        "outputPath": "C:\\Users\\Silya\\Desktop\\SurfsUp\\SurfsUp-web\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Silya\\AppData\\Roaming\\NuGet\\NuGet.Config",
