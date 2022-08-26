@@ -7,14 +7,12 @@ namespace SurfsUp.Models
     public class Surfboard
     {
         [Required]
-        public byte? Image { get; set; }
+        public string? Image { get; set; }
         public int Id { get; set; }
 
         [StringLength(60, MinimumLength = 3)]
         [Required]
         public string? Title { get; set; }
-
-        public string? Image { get; set; }
 
         [Required]
         public float Length { get; set; }

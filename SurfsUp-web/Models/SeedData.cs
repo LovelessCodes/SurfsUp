@@ -19,7 +19,6 @@ namespace SurfsUp.Models
                 context.Surfboard.AddRange(
                     new Surfboard
                     {
-                        Image = 
                         Title = "The Minilog",
                         Image = "https://www.surfsup.com/images/surfboards/the-minilog.jpg",
                         Thickness = 2.75F,
