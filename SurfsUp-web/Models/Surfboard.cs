@@ -12,6 +12,8 @@ namespace SurfsUp.Models
         [Required]
         public string? Title { get; set; }
 
+        public string? Image { get; set; }
+
         [Required]
         public float Length { get; set; }
 

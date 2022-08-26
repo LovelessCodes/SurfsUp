@@ -20,6 +20,7 @@ namespace SurfsUp.Models
                     new Surfboard
                     {
                         Title = "The Minilog",
+                        Image = "https://www.surfsup.com/images/surfboards/the-minilog.jpg",
                         Thickness = 2.75F,
                         Width = 21,
                         Length = 6,
@@ -32,6 +33,7 @@ namespace SurfsUp.Models
                     new Surfboard
                     {
                         Title = "The Wide Glider",
+                        Image = "https://www.surfsup.com/images/surfboards/the-wide-glider.jpg",
                         Thickness = 2.75F,
                         Width = 21,
                         Length = 6,
@@ -44,6 +46,7 @@ namespace SurfsUp.Models
                     new Surfboard
                     {
                         Title = "The Golden Ratio",
+                        Image = "https://www.surfsup.com/images/surfboards/the-golden-ratio.jpg",
                         Thickness = 2.75F,
                         Width = 21,
                         Length = 6,
@@ -56,6 +59,7 @@ namespace SurfsUp.Models
                     new Surfboard
                     {
                         Title = "Mahi Mahi",
+                        Image = "https://www.surfsup.com/images/surfboards/mahi-mahi.jpg",
                         Thickness = 2.75F,
                         Width = 21,
                         Length = 6,

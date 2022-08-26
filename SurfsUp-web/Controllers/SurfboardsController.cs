@@ -55,7 +55,7 @@ namespace SurfsUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Length,Width,Thickness,Volume,Type,Price,Equipment")] Surfboard surfboard)
+        public async Task<IActionResult> Create([Bind("Id,Title,Image,Length,Width,Thickness,Volume,Type,Price,Equipment")] Surfboard surfboard)
         {
             if (ModelState.IsValid)
             {
