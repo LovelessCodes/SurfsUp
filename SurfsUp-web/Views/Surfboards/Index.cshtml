@@ -49,7 +49,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                <img src='@Url.Action("Image", "Surfboards", new { id = item.Id })' alt="@item.Title" />
+                <img style="max-width:100px" src='@Url.Action("Image", "Surfboards", new { id = item.Id })' alt="@item.Title" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
