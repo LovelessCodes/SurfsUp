@@ -6,8 +6,7 @@ namespace SurfsUp.Models
 {
     public class Surfboard
     {
-        [Required]
-        public byte? Image { get; set; }
+        public byte[]? Image { get; set; }
         public int Id { get; set; }
 
         [StringLength(60, MinimumLength = 3)]

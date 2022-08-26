@@ -53,3 +53,7 @@ dkms.conf
 
 # Razor/C#
 *obj/
+*/obj/
+obj/*
+*obj/*
+*/obj/*
