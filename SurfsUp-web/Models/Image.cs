@@ -8,6 +8,6 @@ namespace SurfsUp.Models
     {
         public int Id { get; set; }
 
-        public byte[]? ImageData { get; set; }
+        public IFormFile? ImageData { get; set; }
     }
 }

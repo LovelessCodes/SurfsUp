@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SurfsUp.Models;
 
@@ -23,7 +18,7 @@ namespace SurfsUp.Controllers
         {
               return _context.Surfboard != null ? 
                           View(await _context.Surfboard.ToListAsync()) :
-                          Problem("Entity set 'SurfboardContext.Surfboard'  is null.");
+                          Problem("Entity set 'SurfboardContext.Surfboard' is null.");
         }
 
         // GET: Surfboards/Details/5
@@ -55,10 +50,18 @@ namespace SurfsUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Image,Length,Width,Thickness,Volume,Type,Price,Equipment")] Surfboard surfboard)
+        public async Task<IActionResult> Create([Bind("Id,Title,Length,Width,Thickness,Volume,Type,Price,Equipment")] Surfboard surfboard, [Bind("ImageData")] Image image)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && image.ImageData != null)
             {
+                if (image.ImageData.Length > 0){
+                    using (var ms = new MemoryStream()) {
+                        image.ImageData.CopyTo(ms);
+                        surfboard.Image = ms.ToArray();
+                    }
+                }
+                // string fileName = image.ImageData.FileName;
+                // surfboard.Image = new byte[image.ImageData.Length];
                 _context.Add(surfboard);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -87,7 +90,7 @@ namespace SurfsUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Length,Width,Thickness,Volume,Type,Price,Equipment")] Surfboard surfboard)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Length,Width,Thickness,Volume,Type,Price,Equipment")] Surfboard surfboard, [Bind("ImageData")] Image image)
         {
             if (id != surfboard.Id)
             {
@@ -98,6 +101,17 @@ namespace SurfsUp.Controllers
             {
                 try
                 {
+                    if (image.ImageData != null)
+                    {
+                        if (image.ImageData.Length > 0)
+                        {
+                            using (var ms = new MemoryStream())
+                            {
+                                image.ImageData.CopyTo(ms);
+                                surfboard.Image = ms.ToArray();
+                            }
+                        }
+                    }
                     _context.Update(surfboard);
                     await _context.SaveChangesAsync();
                 }
@@ -178,6 +192,28 @@ namespace SurfsUp.Controllers
 
             await _context.SaveChangesAsync();
             return Json(new { updated = success });
+        }
+
+        // GET: Surfboards/Image/5
+        [HttpGet, ActionName("Image")]
+        public async Task<IActionResult> Image(int? id)
+        {
+            Console.WriteLine("Image id is " + id);
+            if (id == null || _context.Surfboard == null)
+            {
+                return NotFound();
+            }
+            var surfboard = await _context.Surfboard.FindAsync(id);
+            if (surfboard == null)
+            {
+                return NotFound();
+            }
+            if (surfboard.Image == null)
+            {
+                return NotFound();
+            }
+            // return String.Format("data:image/png;base64,{0}", Convert.ToBase64String(surfboard.Image));
+            return File(surfboard.Image, "image/png");
         }
     }
 }
