@@ -54,3 +54,5 @@ dkms.conf
 # Razor/C#
 obj
 bin
+.vs
+.vscode
