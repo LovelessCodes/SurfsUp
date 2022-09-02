@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.3.32811.315
+VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurfsUp", "SurfsUp.csproj", "{F3FB8D9C-BCF1-49E6-8DF7-5000F712DA0B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurfsDown", "SurfsDown\SurfsDown.csproj", "{5E8A4383-8446-4A7A-899D-0AC69DA8F079}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F3FB8D9C-BCF1-49E6-8DF7-5000F712DA0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3FB8D9C-BCF1-49E6-8DF7-5000F712DA0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3FB8D9C-BCF1-49E6-8DF7-5000F712DA0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3FB8D9C-BCF1-49E6-8DF7-5000F712DA0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E8A4383-8446-4A7A-899D-0AC69DA8F079}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E8A4383-8446-4A7A-899D-0AC69DA8F079}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E8A4383-8446-4A7A-899D-0AC69DA8F079}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E8A4383-8446-4A7A-899D-0AC69DA8F079}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {64952F19-FBD3-4D28-B591-09290718CF25}
+		SolutionGuid = {95BF0457-ADC4-447D-8680-5031BF650FC4}
 	EndGlobalSection
 EndGlobal
