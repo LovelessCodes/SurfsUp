@@ -32,27 +32,43 @@ namespace SurfsUp.Controllers
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["PriceSortParm"] = sortOrder == "Price" ? "price_desc" : "Price";
-            ViewData["TypeSortParm"] = sortOrder == "Type" ? "Type_desc" : "Type";
+            ViewData["LengthSortParm"] = sortOrder == "Length" ? "length_desc" : "Length";
+            ViewData["WidthSortParm"] = sortOrder == "Width" ? "width_desc" : "Width";
+            ViewData["ThicknessSortParm"] = sortOrder == "Thickness" ? "thickness_desc" : "Thickness";
+            ViewData["VolumeSortParm"] = sortOrder == "Volume" ? "volume_desc" : "Volume";
+            ViewData["TypeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "type_desc" : "";
+            ViewData["RentedOutSortParm"] = string.IsNullOrEmpty(sortOrder) ? "rentedOut_desc" : "";
 
-
-            var students = from s in _context.Surfboard
+            var boards = from s in _context.Surfboard
                            select s;
             switch (sortOrder)
             {
-                case "name_desc":
-                    students = students.OrderByDescending(s => s.Title);
+                case "title_desc":
+                    boards = boards.OrderByDescending(s => s.Title);
                     break;
-                case "Date":
-                    students = students.OrderBy(s => s.Price);
+                case "price_desc":
+                    boards = boards.OrderBy(s => s.Price);
                     break;
-                case "date_desc":
-                    students = students.OrderByDescending(s => s.Type);
+                case "length_desc":
+                    boards = boards.OrderBy(s => s.Length);
+                    break;
+                case "width_desc":
+                    boards = boards.OrderBy(s => s.Width);
+                    break;
+                case "thickness_desc":
+                    boards = boards.OrderBy(s => s.Thickness);
+                    break;
+                case "volume_desc":
+                    boards = boards.OrderBy(s => s.Volume);
+                    break;
+                case "type_desc":
+                    boards = boards.OrderByDescending(s => s.Type);
                     break;
                 default:
-                    students = students.OrderBy(s => s.Title);
+                    boards = boards.OrderBy(s => s.Title);
                     break;
             }
-            return View(await students.AsNoTracking().ToListAsync());
+            return View(await boards.AsNoTracking().ToListAsync());
         }
 
 
