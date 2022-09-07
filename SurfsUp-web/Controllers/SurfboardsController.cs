@@ -21,15 +21,42 @@ namespace SurfsUp.Controllers
         }
 
         // GET: Surfboards
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //      return _context.Surfboard != null ? 
+        //                  View(await _context.Surfboard.ToListAsync()) :
+        //                  Problem("Entity set 'SurfsUpContext.Surfboard'  is null.");
+        //}
+
+        public async Task<IActionResult> Index(string sortOrder)
         {
-              return _context.Surfboard != null ? 
-                          View(await _context.Surfboard.ToListAsync()) :
-                          Problem("Entity set 'SurfsUpContext.Surfboard'  is null.");
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["PriceSortParm"] = sortOrder == "Price" ? "price_desc" : "Price";
+            ViewData["TypeSortParm"] = sortOrder == "Type" ? "Type_desc" : "Type";
+
+
+            var students = from s in _context.Surfboard
+                           select s;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    students = students.OrderByDescending(s => s.Title);
+                    break;
+                case "Date":
+                    students = students.OrderBy(s => s.Price);
+                    break;
+                case "date_desc":
+                    students = students.OrderByDescending(s => s.Type);
+                    break;
+                default:
+                    students = students.OrderBy(s => s.Title);
+                    break;
+            }
+            return View(await students.AsNoTracking().ToListAsync());
         }
 
 
-        
+
         // GET: Surfboards/Details/5
         public async Task<IActionResult> Details(int? id)
         {
