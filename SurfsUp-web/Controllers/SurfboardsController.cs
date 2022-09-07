@@ -21,16 +21,11 @@ namespace SurfsUp.Controllers
         }
 
         // GET: Surfboards
-        //public async Task<IActionResult> Index()
-        //{
-        //      return _context.Surfboard != null ? 
-        //                  View(await _context.Surfboard.ToListAsync()) :
-        //                  Problem("Entity set 'SurfsUpContext.Surfboard'  is null.");
-        //}
-
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder,string currentFilter,string searchString,int? pageNumber)
         {
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
             ViewData["PriceSortParm"] = sortOrder == "Price" ? "price_desc" : "Price";
             ViewData["LengthSortParm"] = sortOrder == "Length" ? "length_desc" : "Length";
             ViewData["WidthSortParm"] = sortOrder == "Width" ? "width_desc" : "Width";
@@ -39,8 +34,21 @@ namespace SurfsUp.Controllers
             ViewData["TypeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "type_desc" : "";
             ViewData["RentedOutSortParm"] = string.IsNullOrEmpty(sortOrder) ? "rentedOut_desc" : "";
 
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
             var boards = from s in _context.Surfboard
                            select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                boards = boards.Where(s => s.Title.Contains(searchString) || s.Type.Contains(searchString));
+            }
             switch (sortOrder)
             {
                 case "title_desc":
@@ -64,11 +72,15 @@ namespace SurfsUp.Controllers
                 case "type_desc":
                     boards = boards.OrderByDescending(s => s.Type);
                     break;
+                case "rentedOut_desc":
+                    boards = boards.OrderByDescending(s => s.RentedOut);
+                    break;
                 default:
                     boards = boards.OrderBy(s => s.Title);
                     break;
             }
-            return View(await boards.AsNoTracking().ToListAsync());
+            int pageSize = 3;
+            return View(await PaginatedList<Surfboard>.CreateAsync(boards.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
 

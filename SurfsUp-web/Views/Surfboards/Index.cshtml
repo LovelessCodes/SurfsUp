@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SurfsUp.Models.Surfboard>
+﻿@model PaginatedList<SurfsUp.Models.Surfboard>
+
 
 @{
     ViewData["Title"] = "Index";
@@ -12,85 +13,127 @@
     <a asp-action="Create">Create New</a>
 </p>
 }
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by Title or Type: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Image)
+                Image
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Title</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Length)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Price</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Width)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["LengthSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Length</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Volume)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["WidthSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Width</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Thickness)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ThicknessSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Thickness</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Type)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["VolumeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Volume</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["TypeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Type</a>
             </th>
+            @if (User.IsInRole("Administrator"))
+            {
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["RentedOutSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Rented Out</a>
+                </th>
+            }
+            else
+            {
+                <th>
+                    Rent Board
+                </th>
+            }
             <th>
-                @Html.DisplayNameFor(model => model.Equipment)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RentedOut)
+                Equipment
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Length)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Width)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Volume)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Thickness)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Equipment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RentedOut)
-            </td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Image)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Length)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Width)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Thickness)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Volume)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RentedOut)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Equipment)
+                </td>
 
                 @if (User.IsInRole("Administrator"))
-                {  
+                {
                 <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
                 }
-        </tr>
-}
+            </tr>
+        }
     </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
