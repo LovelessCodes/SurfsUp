@@ -2,7 +2,7 @@
 
 
 @{
-    ViewData["Title"] = "ListUsers";
+    ViewData["Title"] = "ListUsers, DeleteUser";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     <h1>Users</h1>
@@ -16,6 +16,13 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.UserName)
                     </td>
+
+
+                    <td> <form method="post" asp-action="DeleteUser" asp-route-id="@item.Id">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+            
                 </tr>
             }
         </tbody>
