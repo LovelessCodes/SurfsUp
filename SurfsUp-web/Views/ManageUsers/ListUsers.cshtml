@@ -1,0 +1,23 @@
+﻿@model List<SurfsUp.Areas.Identity.Data.SurfsUpUser>
+
+
+@{
+    ViewData["Title"] = "ListUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <h1>Users</h1>
+
+    <table class="table">
+        
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
