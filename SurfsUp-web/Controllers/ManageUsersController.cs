@@ -53,8 +53,34 @@ namespace SurfsUp.Controllers
                 }
                 return View("ListUsers");
             }
-
-            
         }
+        public async Task<IActionResult> MakeAdmin(string id)
+        {
+
+
+            var user = await userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                var result = await userManager.AddToRoleAsync(user, id);
+
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListUsers");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+                return View("ListUsers");
+            }
+        }
+
     }
 }
