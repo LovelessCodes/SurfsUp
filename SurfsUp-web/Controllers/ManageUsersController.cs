@@ -10,11 +10,13 @@ namespace SurfsUp.Controllers
     public class ManageUsersController : Controller
     {
         private readonly UserManager<SurfsUpUser> userManager;
-      
+
         public ManageUsersController(UserManager<SurfsUpUser> userManager)
         {
             this.userManager = userManager;
         }
+
+       
 
         [Authorize(Roles = "Administrator")]
         [HttpGet]
@@ -54,33 +56,7 @@ namespace SurfsUp.Controllers
                 return View("ListUsers");
             }
         }
-        public async Task<IActionResult> MakeAdmin(string id)
-        {
-
-
-            var user = await userManager.FindByIdAsync(id);
-            if (user == null)
-            {
-                ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
-                return View("NotFound");
-            }
-            else
-            {
-                var result = await userManager.AddToRoleAsync(user, id);
-
-
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("ListUsers");
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-                return View("ListUsers");
-            }
-        }
+      
 
     }
 }
