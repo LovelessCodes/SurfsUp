@@ -1,0 +1,99 @@
+﻿@model IEnumerable<SurfsUp.Models.Surfboard>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+@if (User.IsInRole("Administrator"))
+{ 
+    <p>
+        <a asp-action="Create" class="btn btn-outline-success">Create New</a>
+    </p>
+}
+<div>
+    <table class="table table-dark table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Image)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    Dimensions<br />
+                    <span class="badge bg-secondary opacity-50">@Html.DisplayNameFor(model => model.Length)</span>
+                    <span class="badge bg-secondary opacity-50">@Html.DisplayNameFor(model => model.Width)</span>
+                    <span class="badge bg-secondary opacity-50">@Html.DisplayNameFor(model => model.Volume)</span>
+                    <span class="badge bg-secondary opacity-50">@Html.DisplayNameFor(model => model.Thickness)</span>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Equipment)
+                </th>
+                @if (User.IsInRole("Administrator")) {
+                    <th>
+                        @Html.DisplayNameFor(model => model.User_ID)
+                    </th>
+                }
+                @if (!string.IsNullOrEmpty(User.Identity.Name))
+                {
+                    <th></th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+                if(item.User_ID == null || User.IsInRole("Administrator"))
+                {
+                    <tr>
+                        <td>
+                            <img src="@Html.DisplayFor(modelItem => item.Image)" class="img-thumbnail bg-dark" alt="@Html.DisplayFor(modelItem => item.Title)"/>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)<br />
+                            <span class="badge text-bg-secondary text-muted">@Html.DisplayFor(modelItem => item.Type)</span>
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary opacity-50">L: @Html.DisplayFor(modelItem => item.Length)</span>
+                            <span class="badge bg-secondary opacity-50">W: @Html.DisplayFor(modelItem => item.Width)</span>
+                            <span class="badge bg-secondary opacity-50">V: @Html.DisplayFor(modelItem => item.Volume)</span>
+                            <span class="badge bg-secondary opacity-50">T: @Html.DisplayFor(modelItem => item.Thickness)</span>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Equipment)
+                        </td>
+                            @if (User.IsInRole("Administrator"))
+                            {  
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User_ID)
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group" style="height: 100%; width:100%;">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">Edit</a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
+                                    </div>
+                                </td>
+                            }
+                            else if (!string.IsNullOrEmpty(User.Identity.Name))
+                            {
+                                <td>
+                                    <form asp-action="Rent">
+                                        <input type="hidden" asp-for="@item.Id" />
+                                        <input type="submit" value="Rent" class="btn btn-outline-primary" />
+                                    </form>
+                                </td>
+                            }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

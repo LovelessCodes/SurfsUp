@@ -5,14 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SurfsUp.Data;
 using SurfsUp.Models;
+using SurfsUp.Areas.Identity.Data;
 
 namespace SurfsUp.Controllers
 {
     public class SurfboardsController : Controller
     {
+        private readonly UserManager<SurfsUpUser> _userManager;
         private readonly SurfsUpContext _context;
 
         public SurfboardsController(SurfsUpContext context)
@@ -26,26 +29,6 @@ namespace SurfsUp.Controllers
               return _context.Surfboard != null ? 
                           View(await _context.Surfboard.ToListAsync()) :
                           Problem("Entity set 'SurfsUpContext.Surfboard'  is null.");
-        }
-
-
-        
-        // GET: Surfboards/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Surfboard == null)
-            {
-                return NotFound();
-            }
-
-            var surfboard = await _context.Surfboard
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (surfboard == null)
-            {
-                return NotFound();
-            }
-
-            return View(surfboard);
         }
 
         // GET: Surfboards/Create
@@ -167,6 +150,25 @@ namespace SurfsUp.Controllers
         private bool SurfboardExists(int id)
         {
           return (_context.Surfboard?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        // POST: Surfboards/Rent/5
+        [HttpPost, ActionName("Rent")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Rent(int id)
+        {
+            if (_context.Surfboard == null)
+            {
+                return Problem("Entity set 'SurfsUpContext.Surfboard' is null.");
+            }
+            var surfboard = await _context.Surfboard.FindAsync(id);
+            var user = await _userManager.GetUserAsync(User);
+            if (surfboard != null && surfboard.User_ID == null && user != null)
+            {
+                surfboard.User_ID = user.Id;
+                _context.Surfboard.Update(surfboard);
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

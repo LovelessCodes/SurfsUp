@@ -54,7 +54,7 @@ namespace SurfsUp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     Length = table.Column<float>(type: "real", nullable: false),
                     Width = table.Column<float>(type: "real", nullable: false),
@@ -63,11 +63,17 @@ namespace SurfsUp.Migrations
                     Type = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Equipment = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: true),
-                    RentedOut = table.Column<bool>(type: "bit", nullable: false)
+                    User_ID = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Surfboard", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Surfboard_AspNetUsers_UserId",
+                        column: x => x.User_ID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
