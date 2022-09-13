@@ -15,12 +15,13 @@ namespace SurfsUp.Controllers
 {
     public class SurfboardsController : Controller
     {
-        private readonly UserManager<SurfsUpUser> _userManager;
+        private readonly UserManager<SurfsUpUser> userManager;
         private readonly SurfsUpContext _context;
 
-        public SurfboardsController(SurfsUpContext context)
+        public SurfboardsController(SurfsUpContext context, UserManager<SurfsUpUser> userManager)
         {
             _context = context;
+            this.userManager = userManager;
         }
 
         // GET: Surfboards
@@ -28,14 +29,12 @@ namespace SurfsUp.Controllers
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["CurrentFilter"] = searchString;
-            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
-            ViewData["PriceSortParm"] = sortOrder == "Price" ? "price_desc" : "Price";
-            ViewData["LengthSortParm"] = sortOrder == "Length" ? "length_desc" : "Length";
-            ViewData["WidthSortParm"] = sortOrder == "Width" ? "width_desc" : "Width";
-            ViewData["ThicknessSortParm"] = sortOrder == "Thickness" ? "thickness_desc" : "Thickness";
-            ViewData["VolumeSortParm"] = sortOrder == "Volume" ? "volume_desc" : "Volume";
-            ViewData["TypeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "type_desc" : "";
-            ViewData["RentedOutSortParm"] = string.IsNullOrEmpty(sortOrder) ? "rentedOut_desc" : "";
+            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Title_desc" : "";
+            ViewData["PriceSortParm"] = sortOrder == "Price" ? "Price_desc" : "Price";
+            ViewData["LengthSortParm"] = sortOrder == "Length" ? "Length_desc" : "Length";
+            ViewData["WidthSortParm"] = sortOrder == "Width" ? "Width_desc" : "Width";
+            ViewData["ThicknessSortParm"] = sortOrder == "Thickness" ? "Thickness_desc" : "Thickness";
+            ViewData["VolumeSortParm"] = sortOrder == "Volume" ? "Volume_desc" : "Volume";
 
             if (searchString != null)
             {
@@ -54,35 +53,45 @@ namespace SurfsUp.Controllers
             }
             switch (sortOrder)
             {
-                case "title_desc":
+                case "Title_desc":
                     boards = boards.OrderByDescending(s => s.Title);
                     break;
-                case "price_desc":
+                case "Price_desc":
+                    boards = boards.OrderByDescending(s => s.Price);
+                    break;
+                case "Length_desc":
+                    boards = boards.OrderByDescending(s => s.Length);
+                    break;
+                case "Width_desc":
+                    boards = boards.OrderByDescending(s => s.Width);
+                    break;
+                case "Thickness_desc":
+                    boards = boards.OrderByDescending(s => s.Thickness);
+                    break;
+                case "Volume_desc":
+                    boards = boards.OrderByDescending(s => s.Volume);
+                    break;
+                case "Price":
                     boards = boards.OrderBy(s => s.Price);
                     break;
-                case "length_desc":
+                case "Length":
                     boards = boards.OrderBy(s => s.Length);
                     break;
-                case "width_desc":
+                case "Width":
                     boards = boards.OrderBy(s => s.Width);
                     break;
-                case "thickness_desc":
+                case "Thickness":
                     boards = boards.OrderBy(s => s.Thickness);
                     break;
-                case "volume_desc":
+                case "Volume":
                     boards = boards.OrderBy(s => s.Volume);
-                    break;
-                case "type_desc":
-                    boards = boards.OrderByDescending(s => s.Type);
-                    break;
-                case "rentedOut_desc":
-                    boards = boards.OrderByDescending(s => s.RentedOut);
                     break;
                 default:
                     boards = boards.OrderBy(s => s.Title);
                     break;
             }
-            int pageSize = 3;
+            int pageSize = 5;
+            Console.WriteLine(ViewData["CurrentSort"]);
             return View(await PaginatedList<Surfboard>.CreateAsync(boards.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
@@ -119,7 +128,7 @@ namespace SurfsUp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> Create([Bind("Image,Id,Title,Length,Width,Volume,Thickness,Type,Price,Equipment,RentedOut")] Surfboard surfboard)
+        public async Task<IActionResult> Create([Bind("Image,Id,Title,Length,Width,Volume,Thickness,Type,Price,Equipment")] Surfboard surfboard)
         {
             if (ModelState.IsValid)
             {
@@ -153,7 +162,7 @@ namespace SurfsUp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> Edit(int id, [Bind("Image,Id,Title,Length,Width,Volume,Thickness,Type,Price,Equipment,RentedOut")] Surfboard surfboard)
+        public async Task<IActionResult> Edit(int id, [Bind("Image,Id,Title,Length,Width,Volume,Thickness,Type,Price,Equipment")] Surfboard surfboard)
         {
             if (id != surfboard.Id)
             {
@@ -237,7 +246,7 @@ namespace SurfsUp.Controllers
                 return Problem("Entity set 'SurfsUpContext.Surfboard' is null.");
             }
             var surfboard = await _context.Surfboard.FindAsync(id);
-            var user = await _userManager.GetUserAsync(User);
+            var user = await userManager.GetUserAsync(User);
             if (surfboard != null && surfboard.User_ID == null && user != null)
             {
                 surfboard.User_ID = user.Id;

@@ -1,0 +1,55 @@
+new Surfboard
+{
+    Title = "Jobe Ventura 10'6" 2021 SUP",
+    Thickness = 12,5F,
+    Width = 81,3,
+    Length = 320,
+    Volume = 190F,
+    Type = "Allaround SUP Boards",
+    Price = 1 099.00,
+    Equipment = "9' toolless click Fin"
+},
+new Surfboard
+{
+    Title = "JP Foil IPR 7'2" 2021 SUP Foilboard",
+    Thickness = 11,7F,
+    Width = 73,
+    Length = 216,
+    Volume = 126 LF,
+    Type = "SUP Foilboards",
+    Price = 1 146.65,
+    Equipment = "No fins"
+},
+new Surfboard
+{
+    Title = "Jobe Vizela 9'4" 2021 SUP",
+    Thickness = 11,4F,
+    Width = 81,3,
+    Length = 285,
+    Volume = 150F,
+    Type = "Allaround SUP Boards",
+    Price = 999.00,
+    Equipment = "Thruster fin for waves (6' center + 4,5' side fin)"
+},
+new Surfboard
+{
+    Title = "JP Fusion IPR 9'8" 2021 SUP",
+    Thickness = 10,8F,
+    Width = 79,
+    Length = 296,
+    Volume = 152 LF,
+    Type = "Surf SUP Boards",
+    Price = 1 316.65,
+    Equipment = "RTM Stand-Up 6,5Ò + 2x FCS M7"
+},
+new Surfboard
+{
+    Title = "Jobe Parana 11'6" 2021 SUP",
+    Thickness = 13,5F,
+    Width = 78,8,
+    Length = 350,
+    Volume = 203F,
+    Type = "Allaround SUP Boards",
+    Price = 1 199.00,
+    Equipment = "9' toolless click Fin"
+},

@@ -23,19 +23,19 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Surfboards" asp-action="Index">Surfboards</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Surfboards" asp-action="Index">Surfboards</a>
                         </li>
 
                         @if(User.IsInRole("Administrator"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="ManageUsers" asp-action="ListUsers">Brugere</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="ManageUsers" asp-action="ListUsers">Users</a>
                             </li>
                         }
                          @if(User.IsInRole("Administrator"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="ManageRoles" asp-action="CreateRole">Lav en rolle</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="ManageRoles" asp-action="CreateRole">Create a Role</a>
                             </li>
                         }
                     </ul>

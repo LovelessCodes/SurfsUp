@@ -18,29 +18,119 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Image)
+                    Image
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Title)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="text-decoration-none text-reset">
+                        Title
+                        @if (ViewData["TitleSortParm"] == "")
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                            </svg>
+                        }
+                        else if (ViewData["TitleSortParm"] == "Title_desc")
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+                            </svg>
+                        }
+                    </a>
                 </th>
                 <th>
                     Dimensions<br />
-                    <span class="badge bg-secondary opacity-50">@Html.DisplayNameFor(model => model.Length)</span>
-                    <span class="badge bg-secondary opacity-50">@Html.DisplayNameFor(model => model.Width)</span>
-                    <span class="badge bg-secondary opacity-50">@Html.DisplayNameFor(model => model.Volume)</span>
-                    <span class="badge bg-secondary opacity-50">@Html.DisplayNameFor(model => model.Thickness)</span>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["LengthSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="text-decoration-none">
+                        <span class="badge bg-secondary opacity-50">
+                            Length
+                            @if (ViewData["LengthSortParm"] == "Length")
+                            {
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                                </svg>
+                            }
+                            else if (ViewData["LengthSortParm"] == "Length_desc")
+                            {
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z" />
+                                </svg>
+                            }
+                        </span>
+                    </a>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["WidthSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="text-decoration-none">
+                        <span class="badge bg-secondary opacity-50">
+                            Width
+                            @if (ViewData["WidthSortParm"] == "Width")
+                            {
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                                </svg>
+                            }
+                            else if (ViewData["WidthSortParm"] == "Width_desc")
+                            {
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z" />
+                                </svg>
+                            }
+                        </span>
+                    </a>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["VolumeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="text-decoration-none">
+                        <span class="badge bg-secondary opacity-50">
+                            Volume
+                            @if (ViewData["VolumeSortParm"] == "Volume")
+                            {
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                                </svg>
+                            }
+                            else if (ViewData["VolumeSortParm"] == "Volume_desc")
+                            {
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z" />
+                                </svg>
+                            }
+                        </span>
+                    </a>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ThicknessSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="text-decoration-none">
+                        <span class="badge bg-secondary opacity-50">
+                            Thickness
+                            @if (ViewData["ThicknessSortParm"] == "Thickness")
+                            {
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                                </svg>
+                            }
+                            else if (ViewData["ThicknessSortParm"] == "Thickness_desc")
+                            {
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z" />
+                                </svg>
+                            }
+                        </span>
+                    </a>
                 </th>
                 <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["VolumeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Volume</a>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="text-decoration-none text-reset">
+                        Price
+                        @if (ViewData["PriceSortParm"] == "Price")
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                            </svg>
+                        }
+                        else if (ViewData["PriceSortParm"] == "Price_desc")
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z" />
+                            </svg>
+                        }
+                    </a>
                 </th>
-                <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["TypeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Type</a>
-                </th>
-            @if (User.IsInRole("Administrator"))
-            {
+                @if (User.IsInRole("Administrator"))
+                {
                     <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["RentedOutSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Rented Out</a>
+                        <a asp-action="Index" asp-route-sortOrder="@ViewData["UserIDSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="text-decoration-none">User_ID</a>
                     </th>
+                    <th></th>
                 }
                 @if (!string.IsNullOrEmpty(User.Identity.Name))
                 {
@@ -98,6 +188,7 @@
             }
         </tbody>
     </table>
+</div>
 
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
@@ -108,13 +199,13 @@
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-pageNumber="@(Model.PageIndex - 1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @prevDisabled">
+   class="btn btn-outline-primary text-light @prevDisabled">
     Previous
 </a>
 <a asp-action="Index"
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-pageNumber="@(Model.PageIndex + 1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @nextDisabled">
+   class="btn btn-outline-primary text-light @nextDisabled">
     Next
 </a>

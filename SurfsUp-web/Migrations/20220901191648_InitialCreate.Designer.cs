@@ -247,9 +247,6 @@ namespace SurfsUp.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<bool>("RentedOut")
-                        .HasColumnType("bit");
-
                     b.Property<float>("Thickness")
                         .HasColumnType("real");
 
