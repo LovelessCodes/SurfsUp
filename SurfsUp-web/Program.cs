@@ -11,6 +11,15 @@ builder.Services.AddDbContext<SurfsUpContext>(options =>
 builder.Services.AddDefaultIdentity<SurfsUpUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>().AddEntityFrameworkStores<SurfsUpContext>();
 
+builder.Services.AddAuthentication().AddGoogle(options =>
+{
+    options.ClientId = "1040558009655-5fsqbqtvhn8qi28h73cr58h5ii9bs5i0.apps.googleusercontent.com";
+    options.ClientSecret = "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";
+}); 
+   
+
+
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
