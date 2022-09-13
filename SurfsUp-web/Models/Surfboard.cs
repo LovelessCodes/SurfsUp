@@ -5,7 +5,7 @@ namespace SurfsUp.Models
 {
     public class Surfboard
     {
-        public byte[]? Image { get; set; }
+        public string? Image { get; set; }
         public int Id { get; set; }
 
         [StringLength(60, MinimumLength = 3)]
@@ -39,7 +39,6 @@ namespace SurfsUp.Models
         [StringLength(60, MinimumLength = 3)]
         public string? Equipment { get; set; }
 
-        [Required]
-        public bool RentedOut { get; set; }
+        public string? User_ID { get; set; }
     }
 }
