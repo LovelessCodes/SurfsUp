@@ -125,14 +125,16 @@
                         }
                     </a>
                 </th>
+                <th>
+                    Equipment
+                </th>
                 @if (User.IsInRole("Administrator"))
                 {
                     <th>
-                        <a asp-action="Index" asp-route-sortOrder="@ViewData["UserIDSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="text-decoration-none">User_ID</a>
+                        <a asp-action="Index" asp-route-sortOrder="@ViewData["UserIDSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="text-decoration-none text-reset">User_ID</a>
                     </th>
                     <th></th>
-                }
-                @if (!string.IsNullOrEmpty(User.Identity.Name))
+                } else if (!string.IsNullOrEmpty(User.Identity.Name))
                 {
                     <th></th>
                 }
@@ -177,9 +179,8 @@
                             else if (!string.IsNullOrEmpty(User.Identity.Name))
                             {
                                 <td>
-                                    <form asp-action="Rent">
-                                        <input type="hidden" asp-for="@item.Id" />
-                                        <input type="submit" value="Rent" class="btn btn-outline-primary" />
+                                    <form method="post" asp-action="Rent" asp-route-id="@item.Id">
+                                        <input type="submit" class="btn btn-outline-primary" value="Rent" />
                                     </form>
                                 </td>
                             }
