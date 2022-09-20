@@ -63,7 +63,7 @@ namespace SurfsUp.Database
                         Price = 645
                     }
                 );
-                context.SaveChanges();
+               context.SaveChanges();
             }
         }
     }

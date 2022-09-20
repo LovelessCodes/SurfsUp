@@ -109,6 +109,10 @@
                     </a>
                 </th>
                 <th>
+                    Booking
+                </th>
+
+                <th>
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="text-decoration-none text-reset">
                         Price
                         @if (ViewData["PriceSortParm"] == "Price")
@@ -155,6 +159,11 @@
                             <span class="badge bg-secondary opacity-50">W: @Html.DisplayFor(modelItem => item.Width)</span>
                             <span class="badge bg-secondary opacity-50">V: @Html.DisplayFor(modelItem => item.Volume)</span>
                             <span class="badge bg-secondary opacity-50">T: @Html.DisplayFor(modelItem => item.Thickness)</span>
+                        </td>
+                        <td>
+                            <button onclick="window.location.href='/Booking/Index/@item.Id'" tyoe="submit">
+                                Book Surfbrættet
+                            </button>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Price)

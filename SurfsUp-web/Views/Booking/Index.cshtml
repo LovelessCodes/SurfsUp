@@ -1,0 +1,69 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model PaginatedList<SurfsUp.Models.Surfboard>
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    using (Html.BeginForm("GetBooking", "Booking"))
+    {
+        <div class="elem-group">
+            <label for="Name">Navn</label>
+            <input type="text" id="Name" name="Name" required>
+        </div>
+        <div class="elem-group">
+            <label for="Email"> E-mail</label>
+            <input type="email" id="Email" name="Email" required>
+        </div>
+        <div class="elem-group">
+            <label for="Phone">Telefonnummer</label>
+            <input type="text" id="Phone" name="Phone" required>
+        </div>
+        <hr>
+        <div class="elem-group inlined">
+            <label for="RentalDate">Udlejning Dato</label>
+            <input type="date" id="RentalDate" name="RentalDate" required>
+        </div>
+        <div class="elem-group inlined">
+            <label for="DeliveryDate">Aflevering Dato</label>
+            <input type="date" id="DeliveryDate" name="DeliveryDate" required>
+        </div>
+
+        <div class="elem-group">
+            <label for="ChooseSurboard">Vælg Surfbrættet</label>
+            <select id="Surfboard-selection" name="SurfBoard" required>
+                @foreach (var item in Model)
+                {
+                    @if ((int)ViewData["SelectedSurfBoard"] == item.Id)
+                    {
+                        <option value="@item.Id" selected>
+                            @item.Title
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">
+                            @item.Title
+                        </option>
+                    }
+
+                }
+
+            </select>
+            @((int)ViewData["SelectedSurfBoard"])
+
+
+        </div>
+        <hr>
+        <button type="submit">Book Surfbrættet</button>
+    }
+
+
+
+
+}
