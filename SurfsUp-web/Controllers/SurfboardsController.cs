@@ -251,6 +251,7 @@ namespace SurfsUp.Controllers
             {
                 surfboard.User_ID = user.Id;
                 _context.Surfboard.Update(surfboard);
+                await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
         }
