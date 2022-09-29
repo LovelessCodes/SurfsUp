@@ -30,19 +30,5 @@ namespace SurfsUp.Controllers
             return View(await PaginatedList<Surfboard>.CreateAsync(boards.AsNoTracking(), 1, 100));
 
         }
-
-
-
-        public void GetBooking(Booking booking)
-        {
-            var boards = from s in _context.Booking where s.SurfBoard == booking.SurfBoard select s;
-            if (boards.Any(x => DateTime.Compare(x.DeliveryDate, booking.RentalDate)>0))
-            {
-                return;
-            }
-
-            _context.Booking.Add(booking);
-            _context.SaveChanges(); 
-        }
     }
 }
