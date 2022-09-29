@@ -142,7 +142,7 @@
         </thead>
         <tbody>
             @foreach (var item in Model) {
-                if(item.User_ID == null || User.IsInRole("Administrator"))
+                if(User.IsInRole("Administrator"))
                 {
                     <tr>
                         <td>
@@ -166,9 +166,7 @@
                         </td>
                             @if (User.IsInRole("Administrator"))
                             {  
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.User_ID)
-                                </td>
+                                
                                 <td>
                                     <div class="btn-group" role="group" style="height: 100%; width:100%;">
                                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary">Edit</a>
