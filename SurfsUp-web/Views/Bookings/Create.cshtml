@@ -1,5 +1,6 @@
 ﻿@model SurfsUp.Models.Booking
 
+
 @{
     ViewData["Title"] = "Create";
 }
@@ -9,8 +10,13 @@
 <h4>Booking</h4>
 <hr />
 <div class="row">
+    <div>
+    </div>
     <div class="col-md-4">
         <form asp-action="Create">
+            <input name="Id" hidden value="@ViewData["SurfboardId"]" />
+        <label>@ViewData["SurfboardId"]</label>
+        <label>@ViewData["Name"]</label>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="BookingDate" class="control-label"></label>

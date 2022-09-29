@@ -163,9 +163,10 @@
                             <span class="badge bg-secondary opacity-50">T: @Html.DisplayFor(modelItem => item.Thickness)</span>
                         </td>
                         <td>
-                            <button onclick="window.location.href='/Booking/Index/@item.Id'" tyoe="submit">
-                                Book Surfbrættet
-                            </button>
+                            
+                            <a asp-controller="Bookings" asp-action="Create" asp-route-id="@item.Id" class="btn btn-outline-primary">
+                               Book
+                            </a>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Price)

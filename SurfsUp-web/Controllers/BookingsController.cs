@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SurfsUp.Areas.Identity.Data;
 using SurfsUp.Data;
 using SurfsUp.Models;
 
@@ -13,9 +15,11 @@ namespace SurfsUp.Controllers
     public class BookingsController : Controller
     {
         private readonly SurfsUpContext _context;
+        private readonly UserManager<SurfsUpUser> userManager;
 
-        public BookingsController(SurfsUpContext context)
+        public BookingsController(SurfsUpContext context, UserManager<SurfsUpUser> userManager)
         {
+            this.userManager = userManager;
             _context = context;
         }
 
@@ -40,12 +44,27 @@ namespace SurfsUp.Controllers
                 return NotFound();
             }
 
+
             return View(booking);
         }
 
         // GET: Bookings/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int? id)
         {
+            if (id == null || _context.Surfboard == null)
+            {
+                return NotFound();
+            }
+
+            var surfboard = await _context.Surfboard
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (surfboard == null)
+            {
+                return NotFound();
+            }
+            ViewData["SurfboardId"] = surfboard.Id;
+            ViewData["Name"] = surfboard.Title;
+
             return View();
         }
 
@@ -54,15 +73,42 @@ namespace SurfsUp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,BookingDate,ReturnDate")] Booking booking)
+        public async Task<IActionResult> Create([Bind("Id")] int id, [Bind("BookingDate,ReturnDate")] Booking booking)
         {
+
+            if (id == null || _context.Surfboard == null)
+            {
+                return NotFound();
+            }
+
+            var surfboard = await _context.Surfboard
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (surfboard == null)
+            {
+                return NotFound();
+            }
+            
+
+            if (User == null)
+            {
+                return NotFound();
+            }
+            var user = await userManager.GetUserAsync(User);
+            booking.User = user;
+            booking.Surfboard = surfboard;
+
             if (ModelState.IsValid)
             {
                 _context.Add(booking);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(SurfboardsController.Index));
             }
+
+            ViewData["SurfboardId"] = surfboard.Id;
+            ViewData["Name"] = surfboard.Title;
+
             return View(booking);
+
         }
 
         // GET: Bookings/Edit/5
