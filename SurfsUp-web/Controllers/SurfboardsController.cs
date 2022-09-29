@@ -236,24 +236,6 @@ namespace SurfsUp.Controllers
           return (_context.Surfboard?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        // POST: Surfboards/Rent/5
-        [HttpPost, ActionName("Rent")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Rent(int id)
-        {
-            if (_context.Surfboard == null)
-            {
-                return Problem("Entity set 'SurfsUpContext.Surfboard' is null.");
-            }
-            var surfboard = await _context.Surfboard.FindAsync(id);
-            var user = await userManager.GetUserAsync(User);
-            if (surfboard != null && surfboard.User_ID == null && user != null)
-            {
-                surfboard.User_ID = user.Id;
-                _context.Surfboard.Update(surfboard);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index));
-        }
+       
     }
 }

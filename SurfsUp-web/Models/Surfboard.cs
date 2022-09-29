@@ -39,6 +39,6 @@ namespace SurfsUp.Models
         [StringLength(60, MinimumLength = 3)]
         public string? Equipment { get; set; }
 
-        public string? User_ID { get; set; }
+       
     }
 }
