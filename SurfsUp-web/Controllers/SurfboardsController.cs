@@ -45,8 +45,30 @@ namespace SurfsUp.Controllers
                 searchString = currentFilter;
             }
 
+            var bookings = from s in _context.Booking
+                           select s;
+
+            bookings = bookings.Where(b => b.ReturnDate > DateTime.Now && b.BookingDate < DateTime.Now);
+           
+
+
             var boards = from s in _context.Surfboard
                            select s;
+
+
+            foreach (var booking in bookings)
+            {
+                
+                if (booking.SurfboardId != null)
+                {
+                     
+                     boards = boards.Where(b => b.Id != booking.SurfboardId);
+                }
+
+            }
+
+
+        
             if (!String.IsNullOrEmpty(searchString))
             {
                 boards = boards.Where(s => s.Title.Contains(searchString) || s.Type.Contains(searchString));

@@ -7,7 +7,7 @@ namespace SurfsUp.Models
         public int Id { get; set; }
         public DateTime BookingDate { get; set; }
         public DateTime ReturnDate { get; set; }
-        public Surfboard? Surfboard { get; set; }
-        public SurfsUpUser? User { get; set; }
+        public int? SurfboardId { get; set; }
+        public string? UserId { get; set; }
     }
 }

@@ -76,7 +76,7 @@ namespace SurfsUp.Controllers
         public async Task<IActionResult> Create([Bind("Id")] int id, [Bind("BookingDate,ReturnDate")] Booking booking)
         {
 
-            if (id == null || _context.Surfboard == null)
+            if (_context.Surfboard == null)
             {
                 return NotFound();
             }
@@ -94,8 +94,8 @@ namespace SurfsUp.Controllers
                 return NotFound();
             }
             var user = await userManager.GetUserAsync(User);
-            booking.User = user;
-            booking.Surfboard = surfboard;
+            booking.UserId = user.Id;
+            booking.SurfboardId = surfboard.Id;
 
             if (ModelState.IsValid)
             {
