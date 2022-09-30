@@ -183,14 +183,7 @@
                                     </div>
                                 </td>
                             }
-                            else if (!string.IsNullOrEmpty(User.Identity.Name))
-                            {
-                                <td>
-                                    <form method="post" asp-action="Rent" asp-route-id="@item.Id">
-                                        <input type="submit" class="btn btn-outline-primary" value="Rent" />
-                                    </form>
-                                </td>
-                            }
+                            
                     </tr>
                 
             }
