@@ -146,8 +146,7 @@
         </thead>
         <tbody>
             @foreach (var item in Model) {
-                if(User.IsInRole("Administrator"))
-                {
+                
                     <tr>
                         <td>
                             <img src="@Html.DisplayFor(modelItem => item.Image)" class="img-thumbnail bg-dark" alt="@Html.DisplayFor(modelItem => item.Title)"/>
@@ -193,7 +192,7 @@
                                 </td>
                             }
                     </tr>
-                }
+                
             }
         </tbody>
     </table>

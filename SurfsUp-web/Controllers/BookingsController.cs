@@ -23,10 +23,25 @@ namespace SurfsUp.Controllers
             _context = context;
         }
 
+
+
         // GET: Bookings
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Booking.ToListAsync());
+
+            var user = await userManager.GetUserAsync(User);
+
+            var bookings = from s in _context.Booking
+                           select s;
+
+            if (!User.IsInRole("Admin"))
+            {
+                bookings = bookings.Where(b => b.UserId == user.Id);
+
+
+            }
+
+              return View(await bookings.ToListAsync());
         }
 
         // GET: Bookings/Details/5
@@ -162,6 +177,8 @@ namespace SurfsUp.Controllers
             return View(booking);
         }
 
+
+        
         // GET: Bookings/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
