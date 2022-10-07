@@ -104,7 +104,25 @@ namespace SurfsUp_API.Controllers
             return BadRequest();
         }
 
-        
+
+        [HttpDelete]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var surfboard = _context.Surfboard
+                .Where(s => s.Id == id)
+                .FirstOrDefault();
+
+            if (surfboard != null)
+            {
+                _context.Surfboard.Remove(surfboard);
+                await _context.SaveChangesAsync();
+            }
+
+            return NoContent();
+        }
+
+
+
 
     }
 }
