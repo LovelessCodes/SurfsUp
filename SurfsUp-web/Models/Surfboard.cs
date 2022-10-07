@@ -1,12 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Newtonsoft.Json.Serialization;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace SurfsUp.Models
 {
     public class Surfboard
     {
+        [JsonIgnore]
+        public int? Id { get; set; }
         public string? Image { get; set; }
-        public int Id { get; set; }
 
         [StringLength(60, MinimumLength = 3)]
         [Required]
@@ -27,7 +31,7 @@ namespace SurfsUp.Models
         public float Thickness { get; set; }
 
         [Required]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$", ErrorMessage = "Type must be capitalized")]
         [StringLength(30)]
         public string? Type { get; set; }
 
@@ -37,8 +41,9 @@ namespace SurfsUp.Models
         public decimal Price { get; set; }
 
         [StringLength(60, MinimumLength = 3)]
-        public string? Equipment { get; set; }
-
-       
+        public string? Equipment
+        {
+            get; set;
+        }
     }
 }

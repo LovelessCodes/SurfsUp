@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using SurfsUp.Areas.Identity.Data;
 using SurfsUp.Data;
 using SurfsUp.Database;
@@ -17,7 +18,28 @@ builder.Services.AddDefaultIdentity<SurfsUpUser>(options => options.SignIn.Requi
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1",
+    new OpenApiInfo
+    {
+        Title = "SurfsUp API - V1",
+        Version = "v1",
+        Description = "API for our own Joe.",
+        TermsOfService = new Uri("http://joe.mama/"),
+        Contact = new OpenApiContact
+        {
+            Name = "Joe Mama",
+            Email = "joe.mama@joe.mama"
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Apache 2.0",
+            Url = new Uri("http://www.apache.org/licenses/LICENSE-2.0.html")
+        }
+    }
+);
+});
 
 var app = builder.Build();
 

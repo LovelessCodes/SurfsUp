@@ -200,7 +200,7 @@ namespace SurfsUp.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SurfboardExists(surfboard.Id))
+                    if (!SurfboardExists((int)surfboard.Id))
                     {
                         return NotFound();
                     }

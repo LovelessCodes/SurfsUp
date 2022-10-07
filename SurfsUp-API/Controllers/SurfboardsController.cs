@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SurfsUp.Areas.Identity.Data;
 using SurfsUp.Data;
 using SurfsUp.Models;
+using static SurfsUp.Models.Surfboard;
 
 namespace SurfsUp_API.Controllers
 {
@@ -23,7 +24,7 @@ namespace SurfsUp_API.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet(Name = "GetSurfboards")]
+        [HttpGet(Name = "")]
         public async Task<PaginatedList<Surfboard>> Get(string? sortOrder, string? currentFilter, string? searchString, int? pageNumber)
         {
             if (searchString != null)
@@ -87,5 +88,23 @@ namespace SurfsUp_API.Controllers
             int pageSize = 5;
             return await PaginatedList<Surfboard>.CreateAsync(boards.AsNoTracking(), pageNumber ?? 1, pageSize);
         }
+
+        [ProducesResponseType(typeof(Surfboard), 201)]
+        [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
+        [ProducesResponseType(500)]
+        [HttpPost(Name = "Create")]
+        public async Task<ActionResult> Create([FromBody] Surfboard surfboard)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(surfboard);
+                await _context.SaveChangesAsync();
+                return new ObjectResult(surfboard) { StatusCode = StatusCodes.Status201Created };
+            }
+            return BadRequest();
+        }
+
+        
+
     }
 }
