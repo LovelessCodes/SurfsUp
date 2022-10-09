@@ -122,16 +122,31 @@ namespace SurfsUp_API.Controllers
         [ProducesResponseType(typeof(NoContentResult), 204)]
         [ProducesErrorResponseType(typeof(NotFoundResult))]
         [HttpPut(Name = "Put")]
-        public async Task<ActionResult> Update([FromBody] Surfboard surfboard)
+        public async Task<ActionResult> Update([FromBody] Surfboard surfboard, int id)
         {
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(surfboard);
-                await _context.SaveChangesAsync();
-                return NoContent();
-            }
-            return BadRequest();
+            if (surfboard == null || surfboard.Id != id)
+                return BadRequest();
+
+            var surfboardToUpdate = _context.Surfboard
+                .Where(s => s.Id == id)
+                .FirstOrDefault();
+
+            if (surfboardToUpdate == null)
+                return NotFound();
+
+            surfboardToUpdate.Title = surfboard.Title;
+            surfboardToUpdate.Type = surfboard.Type;
+            surfboardToUpdate.Price = surfboard.Price;
+            surfboardToUpdate.Length = surfboard.Length;
+            surfboardToUpdate.Width = surfboard.Width;
+            surfboardToUpdate.Thickness = surfboard.Thickness;
+            surfboardToUpdate.Volume = surfboard.Volume;
+
+            _context.Surfboard.Update(surfboardToUpdate);
+            await _context.SaveChangesAsync();
+            return NoContent();
+
         }
     }
 
