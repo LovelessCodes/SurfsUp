@@ -9,15 +9,13 @@ namespace SurfsUp.Controllers
 {
     public class ManageRolesController : Controller
     {
-
         private readonly RoleManager<IdentityRole> roleManager;
-
         public ManageRolesController(RoleManager<IdentityRole> roleManager)
         {
             this.roleManager = roleManager;
         }
 
-        [HttpPost("Create")]
+        [HttpPost]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
             if (ModelState.IsValid)
@@ -30,14 +28,10 @@ namespace SurfsUp.Controllers
                 IdentityResult result = await roleManager.CreateAsync(identityRole);
 
                 if (result.Succeeded)
-                {
                     return RedirectToAction("ListUsers", "ManageUsers");
-                }
 
                 foreach (IdentityError error in result.Errors)
-                {
                     ModelState.AddModelError("", error.Description);
-                }
             }
             return View(model);
         }

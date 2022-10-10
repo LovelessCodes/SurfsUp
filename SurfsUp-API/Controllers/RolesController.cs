@@ -11,12 +11,10 @@ namespace SurfsUp_API.Controllers
     public class RolesController : ControllerBase
     {
 
-        private readonly ILogger<RolesController> _logger;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RolesController(ILogger<RolesController> logger, RoleManager<IdentityRole> roleManager)
+        public RolesController(RoleManager<IdentityRole> roleManager)
         {
-            _logger = logger;
             _roleManager = roleManager;
         }
 

@@ -13,18 +13,14 @@ namespace SurfsUp_API.Controllers
     public class SurfboardsController : ControllerBase
     {
 
-        private readonly ILogger<SurfboardsController> _logger;
         private readonly SurfsUpContext _context;
-        private readonly UserManager<SurfsUpUser> _userManager;
 
-        public SurfboardsController(ILogger<SurfboardsController> logger, SurfsUpContext context, UserManager<SurfsUpUser> userManager)
+        public SurfboardsController(SurfsUpContext context)
         {
-            _logger = logger;
             _context = context;
-            _userManager = userManager;
         }
 
-        [HttpGet(Name = "")]
+        [HttpGet("Read", Name = "List Surfboards")]
         public async Task<PaginatedList<Surfboard>> Get(string? sortOrder, string? currentFilter, string? searchString, int? pageNumber)
         {
             if (searchString != null)
@@ -106,7 +102,7 @@ namespace SurfsUp_API.Controllers
 
         [ProducesResponseType(typeof(NoContentResult), 204)]
         [ProducesErrorResponseType(typeof(NotFoundResult))]
-        [HttpDelete(Name = "Delete")]
+        [HttpDelete("Delete", Name = "Delete Surfboard")]
         public async Task<ActionResult> Delete(int id)
         {
             var surfboard = _context.Surfboard
@@ -119,22 +115,18 @@ namespace SurfsUp_API.Controllers
             return NoContent();
         }
 
-        [ProducesResponseType(typeof(NoContentResult), 204)]
+        [ProducesResponseType(typeof(OkObjectResult), 200)]
         [ProducesErrorResponseType(typeof(NotFoundResult))]
-        [HttpPut(Name = "Put")]
+        [HttpPut("Update", Name = "Update Surfboard")]
         public async Task<ActionResult> Update([FromBody] Surfboard surfboard, int id)
         {
-
             if (surfboard == null || surfboard.Id != id)
                 return BadRequest();
-
             var surfboardToUpdate = _context.Surfboard
                 .Where(s => s.Id == id)
                 .FirstOrDefault();
-
             if (surfboardToUpdate == null)
                 return NotFound();
-
             surfboardToUpdate.Title = surfboard.Title;
             surfboardToUpdate.Type = surfboard.Type;
             surfboardToUpdate.Price = surfboard.Price;
@@ -145,13 +137,7 @@ namespace SurfsUp_API.Controllers
 
             _context.Surfboard.Update(surfboardToUpdate);
             await _context.SaveChangesAsync();
-            return NoContent();
-
+            return Ok(surfboardToUpdate);
         }
     }
-
-
-
-
-    
 }

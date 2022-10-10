@@ -7,6 +7,8 @@ using System.Data;
 
 namespace SurfsUp_API.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class UsersController : Controller
     {
         private readonly UserManager<SurfsUpUser> _userManager;
@@ -36,7 +38,7 @@ namespace SurfsUp_API.Controllers
         [ProducesResponseType(typeof(IdentityResult), 400)]
         [ProducesResponseType(typeof(NotFoundResult), 404)]
         [ProducesErrorResponseType(typeof(BadRequestResult))]
-        [HttpPost("Update", Name = "Toggle Admin")]
+        [HttpPut("Update", Name = "Toggle Admin")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Update(string id)
