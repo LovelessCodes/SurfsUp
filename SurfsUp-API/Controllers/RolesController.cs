@@ -39,12 +39,12 @@ namespace SurfsUp_API.Controllers
         [ProducesResponseType(typeof(IQueryable<IdentityRole>), 200)]
         [ProducesResponseType(typeof(NoContentResult), 204)]
         [ProducesErrorResponseType(typeof(NotFoundResult))]
-        [HttpGet(Name = "List Roles")]
+        [HttpGet("Read", Name = "List Roles")]
         [Authorize(Roles = "Administrator")]
         public ActionResult Get()
         {
             var roles = from r in _roleManager.Roles select r;
-            if (roles.Count() > 0)
+            if (roles.Any())
                 return Ok(roles);
             return NoContent();
         }
@@ -78,7 +78,7 @@ namespace SurfsUp_API.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-            IdentityRole role = await _roleManager.Roles.FirstOrDefaultAsync(m => m.Id == id);
+            IdentityRole? role = await _roleManager.Roles.FirstOrDefaultAsync(m => m.Id == id);
             if (role == null)
                 return NotFound();
             IdentityResult result = await _roleManager.DeleteAsync(role);
