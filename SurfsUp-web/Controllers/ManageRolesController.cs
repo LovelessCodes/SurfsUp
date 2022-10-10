@@ -17,7 +17,7 @@ namespace SurfsUp.Controllers
             this.roleManager = roleManager;
         }
 
-        [HttpPost("Create", Name = "Create")]
+        [HttpPost("Create")]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
             if (ModelState.IsValid)
