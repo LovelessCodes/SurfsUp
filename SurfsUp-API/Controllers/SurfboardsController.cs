@@ -92,7 +92,7 @@ namespace SurfsUp_API.Controllers
         [ProducesResponseType(typeof(Surfboard), 201)]
         [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
         [ProducesResponseType(500)]
-        [HttpPost(Name = "Create")]
+        [HttpPost("Create", Name = "Create Surfboard")]
         public async Task<ActionResult> Create([FromBody] Surfboard surfboard)
         {
             if (ModelState.IsValid)
