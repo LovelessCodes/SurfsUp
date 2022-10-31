@@ -10,10 +10,13 @@ using SurfsUp_API.Areas.Identity.Data;
 using SurfsUp_API.Models;
 using SurfsUp_API.Database;
 
-namespace SurfsUp.Controllers
+namespace SurfsUp_API.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class BookingsController : Controller
     {
+
         private readonly SurfsUpContext _context;
         private readonly UserManager<SurfsUpUser> userManager;
 
@@ -24,28 +27,25 @@ namespace SurfsUp.Controllers
         }
 
 
-
-        // GET: Bookings
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<List<Booking>> Get(Booking booking)
         {
 
             var user = await userManager.GetUserAsync(User);
 
             var bookings = from s in _context.Booking
-                           select s;
+                           select s;           
 
             if (!User.IsInRole("Admin"))
             {
                 bookings = bookings.Where(b => b.UserId == user.Id);
-
-
-            }
-
-              return View(await bookings.ToListAsync());
+            return await bookings.ToListAsync();
         }
-
-        // GET: Bookings/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [ProducesResponseType(typeof(Surfboard), 201)]
+        [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
+        [ProducesResponseType(500)]
+        [HttpPost("Create", Name = "Create Booking")]
+        public async Task<ActionResult> Create([FromBody] Booking booking)
         {
             if (id == null || _context.Booking == null)
             {
@@ -110,27 +110,16 @@ namespace SurfsUp.Controllers
             }
             var user = await userManager.GetUserAsync(User);
             booking.UserId = user.Id;
-            booking.SurfboardId = surfboard.Id;
-
-            if (ModelState.IsValid)
-            {
-                _context.Add(booking);
-                await _context.SaveChangesAsync();
-                //return RedirectToAction(nameof(SurfboardsController.Index));
-            }
-
-            ViewData["SurfboardId"] = surfboard.Id;
-            ViewData["Name"] = surfboard.Title;
-
-            return View(booking);
-
+            _context.Booking.Add(booking);
+            await _context.SaveChangesAsync();
+            return BadRequest();
         }
 
-        // GET: Bookings/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        [ProducesResponseType(typeof(NoContentResult), 204)]
+        [ProducesErrorResponseType(typeof(NotFoundResult))]
+        [HttpDelete("Delete", Name = "Delete Booking")]
+        public async Task<ActionResult> Delete(int id)
         {
-            if (id == null || _context.Booking == null)
-            {
                 return NotFound();
             }
 
@@ -139,82 +128,32 @@ namespace SurfsUp.Controllers
             {
                 return NotFound();
             }
+            _context.Booking.Remove(booking);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        [ProducesResponseType(typeof(OkObjectResult), 200)]
+        [ProducesErrorResponseType(typeof(NotFoundResult))]
+        [HttpPut]
+        public async Task<ActionResult> Update([FromBody] Booking booking, int id)
+        {
+                return NotFound();
+            }
+
             return View(booking);
         }
 
-        // POST: Bookings/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BookingDate,ReturnDate")] Booking booking)
-        {
+            var user = await userManager.GetUserAsync(User);
+            booking.UserId = user.Id;
             if (id != booking.Id)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(booking);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!BookingExists(booking.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(booking);
-        }
-
-
-        
-        // GET: Bookings/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Booking == null)
-            {
-                return NotFound();
-            }
-
-            var booking = await _context.Booking
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (booking == null)
-            {
-                return NotFound();
-            }
-
-            return View(booking);
-        }
-
-        // POST: Bookings/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Booking == null)
-            {
-                return Problem("Entity set 'SurfsUpContext.Booking'  is null.");
-            }
-            var booking = await _context.Booking.FindAsync(id);
-            if (booking != null)
-            {
-                _context.Booking.Remove(booking);
-            }
-            
+            _context.Entry(booking).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            return Ok();
+
 
         private bool BookingExists(int id)
         {
