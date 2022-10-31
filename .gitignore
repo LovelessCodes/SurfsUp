@@ -58,4 +58,4 @@ bin
 .vscode
 
 # 4 tusinde væk
-appsettings.*
+**/appsettings.*
