@@ -1,4 +1,4 @@
-﻿@model PaginatedList<SurfsUp.Models.Surfboard>
+﻿@model PaginatedList<SurfsUp_API.Models.Surfboard>
 
 
 @{
@@ -6,6 +6,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (ViewData["Error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewData["Error"]
+    </div>
+
+}
 <h1>Index</h1>
 @if (User.IsInRole("Administrator"))
 { 

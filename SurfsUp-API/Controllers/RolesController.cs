@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SurfsUp.Models;
+using SurfsUp_API.Models;
 
 namespace SurfsUp_API.Controllers
 {
@@ -22,9 +22,7 @@ namespace SurfsUp_API.Controllers
         [ProducesResponseType(typeof(IdentityResult), 400)]
         [ProducesErrorResponseType(typeof(BadRequestResult))]
         [HttpPost("Create", Name = "Create Role")]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult> Create(IdentityRole role)
+        public async Task<ActionResult> Create([FromBody]IdentityRole role)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -38,11 +36,11 @@ namespace SurfsUp_API.Controllers
         [ProducesResponseType(typeof(NoContentResult), 204)]
         [ProducesErrorResponseType(typeof(NotFoundResult))]
         [HttpGet("Read", Name = "List Roles")]
-        [Authorize(Roles = "Administrator")]
         public ActionResult Get()
         {
-            var roles = from r in _roleManager.Roles select r;
-            if (roles.Any())
+            var roles = _roleManager.Roles;
+            Console.WriteLine(roles);
+            if (roles.Count() > 0)
                 return Ok(roles);
             return NoContent();
         }
@@ -51,9 +49,7 @@ namespace SurfsUp_API.Controllers
         [ProducesResponseType(typeof(IQueryable<IdentityResult>), 400)]
         [ProducesErrorResponseType(typeof(NotFoundResult))]
         [HttpPut("Update", Name = "Update Role")]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult> Update(IdentityRole role)
+        public async Task<ActionResult> Update([FromBody]IdentityRole role)
         {
             var r = _roleManager.Roles.FirstOrDefault(m => m.Id == role.Id);
             if (r == null)
@@ -70,8 +66,6 @@ namespace SurfsUp_API.Controllers
         [ProducesResponseType(typeof(NotFoundResult), 404)]
         [ProducesErrorResponseType(typeof(BadRequestResult))]
         [HttpDelete("Delete", Name = "Delete Role")]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Delete(string id)
         {
             if (!ModelState.IsValid)

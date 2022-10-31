@@ -56,3 +56,6 @@ obj
 bin
 .vs
 .vscode
+
+# 4 tusinde væk
+appsettings.json

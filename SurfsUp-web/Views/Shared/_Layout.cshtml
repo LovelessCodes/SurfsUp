@@ -29,13 +29,13 @@
                         @if(User.IsInRole("Administrator"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="ManageUsers" asp-action="ListUsers">Users</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
                             </li>
                         }
                          @if(User.IsInRole("Administrator"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="ManageRoles" asp-action="CreateRole">Create a Role</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Roles" asp-action="Create">Create a Role</a>
                             </li>
                         }
                     </ul>

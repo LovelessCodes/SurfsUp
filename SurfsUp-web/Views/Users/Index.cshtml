@@ -1,0 +1,44 @@
+﻿@model List<List<SurfsUp_API.Areas.Identity.Data.SurfsUpUser>>
+
+
+@{
+    ViewData["Title"] = "ListUsers, DeleteUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <h1>Users</h1>
+
+    <table class="table table-dark table-hover">
+        <thead>
+            <tr>User</tr>
+            <tr></tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model[0])
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @if (Model[1].Contains(item)) {
+                            <form method="post" asp-action="ToggleAdmin" asp-route-id="@item.Id">
+                                <button type="submit" class="btn btn-danger">Admin</button>
+                            </form>
+                            <form method="post" asp-action="DeleteUser" asp-route-id="@item.Id">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        } else {
+                            <form method="post" asp-action="ToggleAdmin" asp-route-id="@item.Id">
+                                <button type="submit" class="btn btn-primary">Admin</button>
+                            </form>
+                            <form method="post" asp-action="DeleteUser" asp-route-id="@item.Id">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        }
+                    </td>
+                
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,13 +1,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SurfsUp.Areas.Identity.Data;
-using SurfsUp.Data;
+using SurfsUp_API.Areas.Identity.Data;
+using SurfsUp_API.Models;
+using SurfsUp_API.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("SurfsUpContextConnection") ?? throw new InvalidOperationException("Connection string 'SurfsUpContextConnection' not found.");
 
 builder.Services.AddDbContext<SurfsUpContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString, b => b.MigrationsAssembly("SurfsUp-API")));
 
 builder.Services.AddDefaultIdentity<SurfsUpUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>().AddEntityFrameworkStores<SurfsUpContext>();
@@ -25,6 +26,20 @@ builder.Services.AddAuthentication().AddGoogle(options =>
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+// Middleware
+app.Use(async (context, next) =>
+{
+    // Do work that can write to the Response.
+    await next.Invoke();
+    // Do logging or other work that doesn't write to the Response.
+    Log log = new Log
+    {
+        User = context.User.Identity.Name,
+        Time = DateTime.Now,
+        Message = "Accessed: " + context.Request.Path
+    };
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

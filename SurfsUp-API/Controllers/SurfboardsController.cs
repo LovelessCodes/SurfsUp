@@ -1,10 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SurfsUp.Areas.Identity.Data;
-using SurfsUp.Data;
-using SurfsUp.Models;
-using static SurfsUp.Models.Surfboard;
+using SurfsUp_API.Areas.Identity.Data;
+using SurfsUp_API.Database;
+using SurfsUp_API.Models;
+using System.Data;
+using static SurfsUp_API.Models.Surfboard;
 
 namespace SurfsUp_API.Controllers
 {
@@ -12,7 +14,6 @@ namespace SurfsUp_API.Controllers
     [Route("[controller]")]
     public class SurfboardsController : ControllerBase
     {
-
         private readonly SurfsUpContext _context;
 
         public SurfboardsController(SurfsUpContext context)
@@ -20,8 +21,24 @@ namespace SurfsUp_API.Controllers
             _context = context;
         }
 
+        [ProducesResponseType(typeof(Surfboard), 201)]
+        [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
+        [ProducesResponseType(500)]
+        [HttpPost("Create", Name = "Create Surfboard")]
+        public async Task<ActionResult> Create([FromBody] Surfboard surfboard)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(surfboard);
+                await _context.SaveChangesAsync();
+                return new ObjectResult(surfboard) { StatusCode = StatusCodes.Status201Created };
+            }
+            return BadRequest();
+        }
+
+        [ProducesResponseType(typeof(PaginatedList<Surfboard>), 200)]
         [HttpGet("Read", Name = "List Surfboards")]
-        public async Task<PaginatedList<Surfboard>> Get(string? sortOrder, string? currentFilter, string? searchString, int? pageNumber)
+        public SurfboardsList Get(string? sortOrder, string? currentFilter, string? searchString, int? pageNumber)
         {
             if (searchString != null)
                 pageNumber = 1;
@@ -30,7 +47,8 @@ namespace SurfsUp_API.Controllers
 
             var bookings = from s in _context.Booking
                            where s.ReturnDate > DateTime.Now &&
-                           s.BookingDate < DateTime.Now select s;
+                           s.BookingDate < DateTime.Now
+                           select s;
 
             var boards = from s in _context.Surfboard
                          select s;
@@ -82,49 +100,34 @@ namespace SurfsUp_API.Controllers
                     break;
             }
             int pageSize = 5;
-            return await PaginatedList<Surfboard>.CreateAsync(boards.AsNoTracking(), pageNumber ?? 1, pageSize);
+            return new SurfboardsList() {
+                Surfboards = boards.ToList(),
+                PageNumber = pageNumber ?? 1,
+                PageSize = pageSize
+            };
         }
 
-        [ProducesResponseType(typeof(Surfboard), 201)]
-        [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
-        [ProducesResponseType(500)]
-        [HttpPost("Create", Name = "Create Surfboard")]
-        public async Task<ActionResult> Create([FromBody] Surfboard surfboard)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(surfboard);
-                await _context.SaveChangesAsync();
-                return new ObjectResult(surfboard) { StatusCode = StatusCodes.Status201Created };
-            }
-            return BadRequest();
-        }
-
-        [ProducesResponseType(typeof(NoContentResult), 204)]
+        [ProducesResponseType(typeof(Surfboard), 200)]
         [ProducesErrorResponseType(typeof(NotFoundResult))]
-        [HttpDelete("Delete", Name = "Delete Surfboard")]
-        public async Task<ActionResult> Delete(int id)
+        [HttpGet("Single", Name ="Get Single Surfboard")]
+        public ActionResult GetSingle(int? id)
         {
-            var surfboard = _context.Surfboard
-                .Where(s => s.Id == id)
-                .FirstOrDefault();
+            Surfboard surfboard = _context.Surfboard.FirstOrDefault(o => o.Id == id);
             if (surfboard == null)
                 return NotFound();
-            _context.Surfboard.Remove(surfboard);
-            await _context.SaveChangesAsync();
-            return NoContent();
+            return Ok(surfboard);
         }
 
-        [ProducesResponseType(typeof(OkObjectResult), 200)]
-        [ProducesErrorResponseType(typeof(NotFoundResult))]
+        [ProducesResponseType(typeof(Surfboard), 200)]
+        [ProducesResponseType(typeof(NotFoundResult), 404)]
         [HttpPut("Update", Name = "Update Surfboard")]
-        public async Task<ActionResult> Update([FromBody] Surfboard surfboard, int id)
+        public async Task<ActionResult> Update(int id, [FromBody] Surfboard surfboard)
         {
+            Console.WriteLine(id);
             if (surfboard == null || surfboard.Id != id)
                 return BadRequest();
             var surfboardToUpdate = _context.Surfboard
-                .Where(s => s.Id == id)
-                .FirstOrDefault();
+                .FirstOrDefault(s => s.Id == id);
             if (surfboardToUpdate == null)
                 return NotFound();
             surfboardToUpdate.Title = surfboard.Title;
@@ -138,6 +141,21 @@ namespace SurfsUp_API.Controllers
             _context.Surfboard.Update(surfboardToUpdate);
             await _context.SaveChangesAsync();
             return Ok(surfboardToUpdate);
+        }
+        
+        [ProducesResponseType(typeof(NoContentResult), 204)]
+        [ProducesErrorResponseType(typeof(NotFoundResult))]
+        [HttpDelete("Delete", Name = "Delete Surfboard")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var surfboard = _context.Surfboard
+                .Where(s => s.Id == id)
+                .FirstOrDefault();
+            if (surfboard == null)
+                return NotFound();
+            _context.Surfboard.Remove(surfboard);
+            await _context.SaveChangesAsync();
+            return NoContent();
         }
     }
 }

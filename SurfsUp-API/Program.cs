@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using SurfsUp.Areas.Identity.Data;
-using SurfsUp.Data;
-using SurfsUp.Database;
-
+using SurfsUp_API.Database;
+using SurfsUp_API.Areas.Identity.Data;
+using SurfsUp_API.Models;
+using Microsoft.OpenApi.Writers;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("SurfsUpContextConnection") ?? throw new InvalidOperationException("Connection string 'SurfsUpContextConnection' not found.");
@@ -46,7 +46,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    SeedData.Initialize(services);
+    SeedSurfboards.Initialize(services);
 }
 
 // Configure the HTTP request pipeline.
@@ -55,6 +55,20 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Middleware
+app.Use(async (context, next) =>
+{
+    // Do work that can write to the Response.
+    await next.Invoke();
+    // Do logging or other work that doesn't write to the Response.
+    Log log = new Log
+    {
+        User = context.User.Identity.Name,
+        Time = DateTime.Now,
+        Message = "Accessed: " + context.Request.Path
+    };
+});
 
 app.UseHttpsRedirection();
 

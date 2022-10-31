@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SurfsUp.Areas.Identity.Data;
-using System.Data;
+using SurfsUp_API.Areas.Identity.Data;
 
 namespace SurfsUp_API.Controllers
 {
@@ -18,20 +16,15 @@ namespace SurfsUp_API.Controllers
             _userManager = userManager;
         }
 
-        [ProducesResponseType(typeof(OkObjectResult), 200)]
+        [ProducesResponseType(typeof(IQueryable<SurfsUpUser>), 200)]
         [ProducesErrorResponseType(typeof(BadRequestResult))]
-        [HttpPost("Read", Name = "List Users")]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
+        [HttpGet("Read", Name = "List Users")]
         public async Task<ActionResult> Get()
         {
             var users = _userManager.Users;
-            var admins = await _userManager.GetUsersInRoleAsync("Admin");
-            List<List<SurfsUpUser>> model = new()
-            {
-                users.ToList(), admins.ToList()
-            };
-            return Ok(model);
+            foreach (var user in users)
+                user.Roles = await _userManager.GetRolesAsync(user);
+            return Ok(users.ToList());
         }
 
         [ProducesResponseType(typeof(OkObjectResult), 200)]
@@ -39,8 +32,6 @@ namespace SurfsUp_API.Controllers
         [ProducesResponseType(typeof(NotFoundResult), 404)]
         [ProducesErrorResponseType(typeof(BadRequestResult))]
         [HttpPut("Update", Name = "Toggle Admin")]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Update(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -62,8 +53,6 @@ namespace SurfsUp_API.Controllers
         [ProducesResponseType(typeof(NotFoundResult), 404)]
         [ProducesErrorResponseType(typeof(BadRequestResult))]
         [HttpDelete("Delete", Name = "Delete User")]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Delete(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
