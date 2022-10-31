@@ -59,3 +59,4 @@ bin
 
 # 4 tusinde væk
 appsettings.json
+appsettings.Development.json
