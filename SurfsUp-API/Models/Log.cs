@@ -1,6 +1,6 @@
 ﻿using SurfsUp_API.Database;
 
-namespace SurfsUp_API.Models
+namespace SurfsUp_Models
 {
     public class Log
     {

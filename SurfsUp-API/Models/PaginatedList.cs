@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace SurfsUp_API.Models
+namespace SurfsUp_Models
 {
     public class PaginatedList<T> : List<T>
     {

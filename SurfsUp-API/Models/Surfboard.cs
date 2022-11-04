@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace SurfsUp_API.Models
+namespace SurfsUp_Models
 {
     public class Surfboard
     {

@@ -1,0 +1,12 @@
+﻿@using SurfsUp_Models
+@page "/Surfboards"
+
+<div>
+	@foreach(var s in surfboards) {
+		<Surfboard></Surfboard>
+	}
+</div>
+
+@code {
+	private List<Surfboard> surfboards { get; set; }
+}

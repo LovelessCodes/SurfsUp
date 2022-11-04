@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SurfsUp_API.Areas.Identity.Data;
 using SurfsUp_API.Database;
-using SurfsUp_API.Models;
+using SurfsUp_Models;
 
 namespace SurfsUp_API.Controllers
 {

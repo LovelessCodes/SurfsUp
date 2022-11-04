@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SurfsUp_API.Areas.Identity.Data;
-using SurfsUp_API.Models;
+using SurfsUp_Models;
 using SurfsUp_API.Database;
 
 var builder = WebApplication.CreateBuilder(args);

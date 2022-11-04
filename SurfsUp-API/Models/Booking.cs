@@ -1,6 +1,6 @@
 ﻿using SurfsUp_API.Areas.Identity.Data;
 
-namespace SurfsUp_API.Models
+namespace SurfsUp_Models
 {
     public class Booking
     {

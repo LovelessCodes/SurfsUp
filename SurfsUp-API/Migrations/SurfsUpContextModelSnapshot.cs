@@ -224,7 +224,7 @@ namespace SurfsUp_API.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("SurfsUp_API.Models.Booking", b =>
+            modelBuilder.Entity("SurfsUp_Models.Booking", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -249,7 +249,7 @@ namespace SurfsUp_API.Migrations
                     b.ToTable("Booking");
                 });
 
-            modelBuilder.Entity("SurfsUp_API.Models.Log", b =>
+            modelBuilder.Entity("SurfsUp_Models.Log", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -273,7 +273,7 @@ namespace SurfsUp_API.Migrations
                     b.ToTable("Log");
                 });
 
-            modelBuilder.Entity("SurfsUp_API.Models.Surfboard", b =>
+            modelBuilder.Entity("SurfsUp_Models.Surfboard", b =>
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()

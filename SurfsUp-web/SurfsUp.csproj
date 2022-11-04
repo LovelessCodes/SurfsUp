@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SurfsUp-API\SurfsUp-API.csproj" />
+    <ProjectReference Include="..\SurfsUp-Models\SurfsUp-Models.csproj" />
   </ItemGroup>
 
 </Project>
