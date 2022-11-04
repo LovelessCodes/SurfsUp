@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SurfsUp_Models;
-using SurfsUp_API.Areas.Identity.Data;
 
 namespace SurfsUp.Controllers
 {

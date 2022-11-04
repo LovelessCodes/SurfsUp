@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SurfsUp_API.Areas.Identity.Data;
-using System.Collections.Generic;
-using System.Data;
+using SurfsUp_Models;
 
 namespace SurfsUp.Controllers
 {

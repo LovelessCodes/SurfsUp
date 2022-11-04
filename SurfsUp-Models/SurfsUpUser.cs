@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SurfsUp_API.Areas.Identity.Data;
+namespace SurfsUp_Models;
 
 // Add profile data for application users by adding properties to the SurfsUpUser class
 public class SurfsUpUser : IdentityUser
