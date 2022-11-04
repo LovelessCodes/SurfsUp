@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurfsUp", "SurfsUp.csproj",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurfsUp-API", "..\SurfsUp-API\SurfsUp-API.csproj", "{B62D5822-F9DF-48AB-BB26-4FB3C6F9AFAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurfsUp-Blazor", "..\SurfsUp-Blazor\SurfsUp-Blazor.csproj", "{D1FAB6D2-5797-4112-ADFF-8D5030CEACF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurfsUp-Blazor", "..\SurfsUp-Blazor\SurfsUp-Blazor.csproj", "{D1FAB6D2-5797-4112-ADFF-8D5030CEACF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurfsUp-Models", "..\SurfsUp-Models\SurfsUp-Models.csproj", "{EE93780A-F4D8-49A8-AB4A-382754206433}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurfsUp-Models", "..\SurfsUp-Models\SurfsUp-Models.csproj", "{EE93780A-F4D8-49A8-AB4A-382754206433}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

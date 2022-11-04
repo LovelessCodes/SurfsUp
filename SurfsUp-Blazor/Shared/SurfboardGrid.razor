@@ -1,0 +1,17 @@
+﻿<h3>SurfboardGrid</h3>
+
+
+<div>
+    @foreach (var s in surfboards)
+    {
+        <SurfboardCard Surfboard="@s"></SurfboardCard>
+    }
+</div>
+
+@code
+{
+    [Parameter]
+    public List<Surfboard> Surfboards { get; set; }
+}
+
+
