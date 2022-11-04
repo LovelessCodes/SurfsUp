@@ -2,9 +2,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SurfsUp_API.Areas.Identity.Data;
-using SurfsUp_API.Database;
 using SurfsUp_Models;
+using SurfsUp_API.Database;
 using System.Data;
 using static SurfsUp_Models.Surfboard;
 

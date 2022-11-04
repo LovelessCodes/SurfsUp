@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SurfsUp_API.Database;
-using SurfsUp_API.Areas.Identity.Data;
 using SurfsUp_Models;
 using Microsoft.OpenApi.Writers;
 

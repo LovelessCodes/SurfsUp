@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using SurfsUp_API.Areas.Identity.Data;
+using SurfsUp_Models;
 
 namespace SurfsUp_API.Areas.Identity.Pages.Account
 {

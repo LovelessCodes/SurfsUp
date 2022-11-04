@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SurfsUp_API.Areas.Identity.Data;
+using SurfsUp_Models;
 
 namespace SurfsUp_API.Controllers
 {
