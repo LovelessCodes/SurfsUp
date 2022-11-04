@@ -1,10 +1,11 @@
-﻿<h3>SurfboardGrid</h3>
+﻿@using SurfsUp_Models
+<h3>SurfboardGrid</h3>
 
 
 <div>
-    @foreach (var s in surfboards)
+    @foreach (var s in Surfboards)
     {
-        <SurfboardCard Surfboard="@s"></SurfboardCard>
+        <SurfboardCard Surfboard=@s></SurfboardCard>
     }
 </div>
 

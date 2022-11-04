@@ -4,13 +4,21 @@
 <div>
     <h1>Surfboards</h1>
     <p>Here are the surfboards we have for sale.</p>
-    <SurfboardGrid Surfboards="@surfboards"></SurfboardGrid>
+    @if (surfboards != null)
+    {
+       <SurfboardGrid Surfboards=@surfboards.Surfboards></SurfboardGrid>
+    }
+    else
+    {
+        <p><em>Loading...</em></p>
+    }
+   
 </div>
 
 @code {
-    List<Surfboard> surfboards = new List<Surfboard>();
-    protected async override void OnInitialized()
+    private SurfboardsList? surfboards;
+    protected async override Task OnInitializedAsync()
     {
-        surfboards = await Http.GetFromJsonAsync<List<Surfboard>>("https://localhost:44394/api/surfboards");
+        surfboards = await Http.GetFromJsonAsync<SurfboardsList>("/surfboards/read");
     }
 }
