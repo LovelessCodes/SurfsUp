@@ -14,6 +14,7 @@ namespace SurfsUp_API.Database
                 // Look for any surfboards.
                 if (context.Surfboard.Any())
                 {
+                    Console.WriteLine("[~] Surfboards have already been Seeded, continuing ...");
                     return;   // DB has been seeded
                 }
 
@@ -62,7 +63,8 @@ namespace SurfsUp_API.Database
                         Price = 645
                     }
                 );
-               context.SaveChanges();
+                context.SaveChanges();
+                Console.WriteLine("[+] Surfboards have been Seeded!");
             }
         }
     }

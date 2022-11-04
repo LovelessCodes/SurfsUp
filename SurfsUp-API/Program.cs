@@ -43,9 +43,11 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+app.UseAuthorization();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
+    SeedRoles.Initialize(services);
     SeedSurfboards.Initialize(services);
 }
 
@@ -72,7 +74,6 @@ app.Use(async (context, next) =>
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
 
 app.MapControllers();
 

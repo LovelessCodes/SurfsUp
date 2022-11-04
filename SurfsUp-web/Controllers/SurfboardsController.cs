@@ -21,7 +21,7 @@ namespace SurfsUp.Controllers
 
         // GET: Surfboards
         [HttpGet, ActionName("Index")]
-        public async Task<IActionResult> Index(string sortOrder,string currentFilter,string searchString,int? pageNumber,string? error)
+        public async Task<ActionResult> Index(string sortOrder,string currentFilter,string searchString,int? pageNumber,string? error)
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["CurrentFilter"] = searchString;
@@ -56,7 +56,7 @@ namespace SurfsUp.Controllers
 
         
         // GET: Surfboards/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
 
             return View();
@@ -64,7 +64,7 @@ namespace SurfsUp.Controllers
 
         // GET: Surfboards/Create
         [Authorize(Roles = "Administrator")]
-        public IActionResult Create()
+        public ActionResult Create()
         {
             return View();
         }
@@ -75,7 +75,7 @@ namespace SurfsUp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> Create([Bind("Image,Id,Title,Length,Width,Volume,Thickness,Type,Price,Equipment")] Surfboard surfboard)
+        public async Task<ActionResult> Create([Bind("Image,Id,Title,Length,Width,Volume,Thickness,Type,Price,Equipment")] Surfboard surfboard)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace SurfsUp.Controllers
 
         // GET: Surfboards/Edit/5
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
                 return NotFound();
@@ -101,7 +101,7 @@ namespace SurfsUp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> Edit(int id, [Bind("Image,Id,Title,Length,Width,Volume,Thickness,Type,Price,Equipment")] Surfboard surfboard)
+        public async Task<ActionResult> Edit(int id, [Bind("Image,Id,Title,Length,Width,Volume,Thickness,Type,Price,Equipment")] Surfboard surfboard)
         {
             if (id != surfboard.Id)
                 return NotFound();
@@ -117,7 +117,7 @@ namespace SurfsUp.Controllers
 
         // GET: Surfboards/Delete/5
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             HttpClient httpClient = new();
             Surfboard surfboard = await httpClient.GetFromJsonAsync<Surfboard>(mainUrl + "/Surfboards/Single?id=" + id);
@@ -128,7 +128,7 @@ namespace SurfsUp.Controllers
         [HttpPost, ActionName("ConfirmDeletetion")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public async Task<IActionResult> ConfirmDeletetion(int id)
+        public async Task<ActionResult> ConfirmDeletetion(int id)
         {
             var httpClient = new HttpClient();
             var request = await httpClient.DeleteAsync(mainUrl + "/Surfboards/Delete?id=" + id.ToString());

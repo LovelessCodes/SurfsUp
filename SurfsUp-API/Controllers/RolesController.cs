@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SurfsUp_API.Database;
 using SurfsUp_API.Models;
 
 namespace SurfsUp_API.Controllers
@@ -39,10 +40,7 @@ namespace SurfsUp_API.Controllers
         public ActionResult Get()
         {
             var roles = _roleManager.Roles;
-            Console.WriteLine(roles);
-            if (roles.Count() > 0)
-                return Ok(roles);
-            return NoContent();
+            return Ok(roles);
         }
 
         [ProducesResponseType(typeof(NoContentResult), 201)]

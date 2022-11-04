@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SurfsUp_API.Areas.Identity.Data;
-using SurfsUp_API.Models;
 using SurfsUp_API.Database;
+using SurfsUp_API.Models;
 
 namespace SurfsUp_API.Controllers
 {
@@ -28,18 +23,28 @@ namespace SurfsUp_API.Controllers
 
 
         [HttpGet]
-        public async Task<List<Booking>> Get(Booking booking)
+        public async Task<ActionResult> Get(Booking booking)
         {
-
-            var user = await userManager.GetUserAsync(User);
-
-            var bookings = from s in _context.Booking
-                           select s;           
-
-            if (!User.IsInRole("Admin"))
+            if (booking != null)
             {
-                bookings = bookings.Where(b => b.UserId == user.Id);
-            return await bookings.ToListAsync();
+                var book = from s in _context.Booking
+                           where s.Id == booking.Id select s;
+                return Ok(book.ToList());
+            }
+            var user = await userManager.GetUserAsync(User);
+            if (user.Roles.Contains("Administrator"))
+            {
+                var bookings = from s in _context.Booking
+                               select s;
+                return Ok(bookings.ToList());
+            }
+            if (user != null)
+            {
+                var bookings = from s in _context.Booking
+                               where s.UserId == user.Id select s;
+                return Ok(await bookings.ToListAsync());
+            }
+            return NotFound();
         }
         [ProducesResponseType(typeof(Surfboard), 201)]
         [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
@@ -47,67 +52,6 @@ namespace SurfsUp_API.Controllers
         [HttpPost("Create", Name = "Create Booking")]
         public async Task<ActionResult> Create([FromBody] Booking booking)
         {
-            if (id == null || _context.Booking == null)
-            {
-                return NotFound();
-            }
-
-            var booking = await _context.Booking
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (booking == null)
-            {
-                return NotFound();
-            }
-
-
-            return View(booking);
-        }
-
-        // GET: Bookings/Create
-        public async Task<IActionResult> Create(int? id)
-        {
-            if (id == null || _context.Surfboard == null)
-            {
-                return NotFound();
-            }
-
-            var surfboard = await _context.Surfboard
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (surfboard == null)
-            {
-                return NotFound();
-            }
-            ViewData["SurfboardId"] = surfboard.Id;
-            ViewData["Name"] = surfboard.Title;
-
-            return View();
-        }
-
-        // POST: Bookings/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] int id, [Bind("BookingDate,ReturnDate")] Booking booking)
-        {
-
-            if (_context.Surfboard == null)
-            {
-                return NotFound();
-            }
-
-            var surfboard = await _context.Surfboard
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (surfboard == null)
-            {
-                return NotFound();
-            }
-            
-
-            if (User == null)
-            {
-                return NotFound();
-            }
             var user = await userManager.GetUserAsync(User);
             booking.UserId = user.Id;
             _context.Booking.Add(booking);
@@ -120,9 +64,6 @@ namespace SurfsUp_API.Controllers
         [HttpDelete("Delete", Name = "Delete Booking")]
         public async Task<ActionResult> Delete(int id)
         {
-                return NotFound();
-            }
-
             var booking = await _context.Booking.FindAsync(id);
             if (booking == null)
             {
@@ -138,11 +79,7 @@ namespace SurfsUp_API.Controllers
         [HttpPut]
         public async Task<ActionResult> Update([FromBody] Booking booking, int id)
         {
-                return NotFound();
-            }
 
-            return View(booking);
-        }
 
             var user = await userManager.GetUserAsync(User);
             booking.UserId = user.Id;
@@ -155,9 +92,6 @@ namespace SurfsUp_API.Controllers
             return Ok();
 
 
-        private bool BookingExists(int id)
-        {
-          return _context.Booking.Any(e => e.Id == id);
         }
     }
 }

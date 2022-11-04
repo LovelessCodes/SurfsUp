@@ -19,7 +19,7 @@ namespace SurfsUp.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<ActionResult> Index()
         {
             var users = userManager.Users;
             var admins = await userManager.GetUsersInRoleAsync("Admin");
@@ -33,7 +33,7 @@ namespace SurfsUp.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]
-        public async Task<IActionResult> ToggleAdmin(string id)
+        public async Task<ActionResult> ToggleAdmin(string id)
         {
             var user = await userManager.FindByIdAsync(id);
             if (user == null)
@@ -60,7 +60,7 @@ namespace SurfsUp.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]
-        public async Task<IActionResult> DeleteUser(string id)
+        public async Task<ActionResult> DeleteUser(string id)
         {
 
 

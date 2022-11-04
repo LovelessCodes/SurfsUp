@@ -14,7 +14,7 @@ namespace SurfsUp.Controllers
 
         [HttpPost]
         [Authorize("Administrator")]
-        public async Task<IActionResult> Create(CreateRoleViewModel model)
+        public async Task<ActionResult> Create(CreateRoleViewModel model)
         {
             if (ModelState.IsValid)
             {
