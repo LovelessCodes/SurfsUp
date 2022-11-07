@@ -1,0 +1,24 @@
+﻿@page "/Surfboards/update"
+@using SurfsUp_Models
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+
+
+<h4>Indsæt Update frontend her!</h4>
+
+@code 
+{
+    private List<Surfboard>? surfboards;
+    private async Task UpdateSurfboard()
+    {
+        {
+            var response = await Http.PutAsJsonAsync("/surfboards/update", surfboards);
+            if (response.IsSuccessStatusCode)
+            {
+                NavigationManager.NavigateTo("/Surfboards/index");
+            }
+        }
+        
+    }
+}

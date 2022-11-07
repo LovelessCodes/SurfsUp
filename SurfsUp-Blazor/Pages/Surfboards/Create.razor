@@ -1,0 +1,23 @@
+﻿@page "/Surfboards/create"
+@using SurfsUp_Models
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+
+<h4>Indsæt Create frontend her!</h4>
+
+
+
+@code 
+{
+    private List<Surfboard>? surfboards;
+
+    private async Task CreateSurfboard()
+    {
+        var response = await Http.PostAsJsonAsync("/surfboards/create", surfboards);
+        if (response.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/Surfboards/index");
+        }
+    }
+}
