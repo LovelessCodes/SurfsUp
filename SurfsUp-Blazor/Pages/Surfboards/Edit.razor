@@ -3,17 +3,26 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
+<input type="text" placeholder="Title" @bind-value="surfboard.Title" />
+<input type="number" placeholder="Length" @bind-value="surfboard.Length" />
+<input type="number" placeholder="Width" @bind-value="surfboard.Width" />
+<input type="number" placeholder="Volume" @bind-value="surfboard.Volume" />
+<input type="number" placeholder="Thickness" @bind-value="surfboard.Thickness" />
+<input type="text" placeholder="Type" @bind-value="surfboard.Type" />
+<input type="number" placeholder="Price" @bind-value="surfboard.Price" />
+<input type="text" placeholder="Equipment" @bind-value="surfboard.Equipment" />
 
-
-<h4>Indsæt Update frontend her!</h4>
+<button class="btn btn-primary" @onclick="UpdateSurfboard">Update Surboard</button>
 
 @code 
 {
-    private List<Surfboard>? surfboards;
+    [Parameter]
+    public Surfboard? surfboard { get; set; }
+    
     private async Task UpdateSurfboard()
     {
         {
-            var response = await Http.PutAsJsonAsync("/surfboards/update", surfboards);
+            var response = await Http.PutAsJsonAsync("/surfboards/update", surfboard);
             if (response.IsSuccessStatusCode)
             {
                 NavigationManager.NavigateTo("/Surfboards/index");

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SurfsUp_Models
 {
-    public class Surfboard
+    public class Surfboard : ICloneable
     {
         public int? Id { get; set; }
         public string? Image { get; set; }
@@ -40,6 +40,10 @@ namespace SurfsUp_Models
         public string? Equipment
         {
             get; set;
+        }
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
     }
 }

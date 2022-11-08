@@ -10,7 +10,7 @@
     <h1>Delete Surfboard</h1>
     <p>Are you sure you want to delete this surfboard?</p>
     <p>
-        <button class="btn btn-primary" @onclick="DeleteSurfboard">Yes</button>
+        <button class="btn btn-primary" @onclick="@(e => DeleteSurfboard(surfboard.Id))">Yes</button>
         <button class="btn btn-secondary" @onclick="Cancel">No</button>
     </p>
     </div>
@@ -18,15 +18,17 @@
 @code   
 {
 
-    private List<Surfboard> surfboards;
+    [Parameter]
+    public Surfboard surfboard { get; set; }
     
-    private async Task DeleteSurfboard()
+    private async Task DeleteSurfboard(int? id)
     {
-        var response = await Http.DeleteAsync("/surfboards/delete" + surfboards);
-        if (response.IsSuccessStatusCode)
-        {
-            NavigationManager.NavigateTo("/Surfboards/index");
-        }
+        
+            var response = await Http.DeleteAsync("/surfboards/delete/" + id);
+            if (response.IsSuccessStatusCode)
+            {
+                NavigationManager.NavigateTo("/Surfboards/index");
+            }
     }
     
     private void Cancel()

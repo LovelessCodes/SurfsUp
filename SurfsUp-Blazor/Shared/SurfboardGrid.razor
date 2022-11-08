@@ -2,10 +2,10 @@
 <h3>SurfboardGrid</h3>
 
 
-<div>
+<div style="display:flex;flex-direction:row;">
     @foreach (var s in Surfboards)
     {
-        <SurfboardCard Surfboard=@s></SurfboardCard>
+        <SurfboardCard Surfboard=@s RemoveMeFromList=@Remove></SurfboardCard>
     }
 </div>
 
@@ -13,6 +13,10 @@
 {
     [Parameter]
     public List<Surfboard> Surfboards { get; set; }
+
+    private void Remove(Surfboard surfboard) {
+        Surfboards.Remove(surfboard);
+    }
 }
 
 

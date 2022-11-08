@@ -1,7 +1,9 @@
 ﻿@using SurfsUp_Models
 @page "/Surfboards/index"
+@inject NavigationManager NavigationManager
 @inject HttpClient Http
 <div>
+    <button class="btn btn-primary" @onclick="CreateSurfboard">Create Surboard</button>
     <h1>Surfboards</h1>
     <p>Here are the surfboards we have for sale.</p>
     @if (surfboards != null)
@@ -20,5 +22,10 @@
     protected async override Task OnInitializedAsync()
     {
         surfboards = await Http.GetFromJsonAsync<SurfboardsList>("/surfboards/read");
+    }
+
+    private void CreateSurfboard()
+    {
+        NavigationManager.NavigateTo("/Surfboards/create");
     }
 }
