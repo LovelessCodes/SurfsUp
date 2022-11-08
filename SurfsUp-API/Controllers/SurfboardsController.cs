@@ -10,7 +10,7 @@ using static SurfsUp_Models.Surfboard;
 namespace SurfsUp_API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class SurfboardsController : ControllerBase
     {
         private readonly SurfsUpContext _context;

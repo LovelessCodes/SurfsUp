@@ -4,7 +4,7 @@
 <div class="card" style="width: 18rem;">
     @if (Status == "Card")
     {
-        <img src="" class="card-img-top" alt="...">
+        <img src="@Surfboard.Image" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">@Surfboard.Title</h5>
             <p class="card-text">@Surfboard.Type</p>
@@ -18,13 +18,50 @@
             <li class="list-group-item"><span class="badge bg-secondary opacity-50">Equipment</span> @Surfboard.Equipment</li>
         </ul>
         <div class="card-body">
-            <button class="btn btn-primary" @onclick="UpdateSurfboard">Update Surboard</button>
-            <button class="btn btn-primary" @onclick="DeleteSurfboard">Delete Surfboard</button>
+            <div class="btn-group" role="group" aria-label="Button Group">
+                <button type="button" class="btn btn-primary" @onclick="UpdateSurfboard">Update</button>
+                <button type="button" class="btn btn-primary" @onclick="DeleteSurfboard">Delete</button>
+                <button type="button" class="btn btn-primary" @onclick="BookSurfboard">Book</button>
+            </div>
+        </div>
+    }
+    @if (Status == "Book")
+    {
+        <img src="@Surfboard.Image" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">@Surfboard.Title</h5>
+            <p class="card-text">@Surfboard.Type</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Length</span> @Surfboard.Length</li>
+            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Width</span> @Surfboard.Width</li>
+            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Volume</span> @Surfboard.Volume</li>
+            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Thickness</span> @Surfboard.Thickness</li>
+            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Price</span> @Surfboard.Price</li>
+            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Equipment</span> @Surfboard.Equipment</li>
+        </ul>
+        <div class="card-body">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-Email">Email</span>
+                </div>
+                <input type="text" class="form-control" @bind-value="@Booking.Email" placeholder="Email" aria-label="Email" aria-describedby="basic-Email">
+            </div>
+            <p>Start Date and Time</p>
+            <input type="date" @bind-value="Start.date" class="form-control">
+            <input type="time" @bind-value="Start.time" class="form-control">
+            <p>End Date and Time</p>
+            <input type="date" @bind-value="End.date" class="form-control">
+            <input type="time" @bind-value="End.time" class="form-control">
+            <div class="btn-group" role="group" aria-label="Button Group">
+                <button type="button" class="btn btn-primary" @onclick="ConfirmBook">Book</button>
+                <button type="button" class="btn btn-primary" @onclick="GoBackToCard">Cancel</button>
+            </div>
         </div>
     }
     @if (Status == "Delete")
     {
-        <img src="" class="card-img-top" alt="...">
+        <img src="@Surfboard.Image" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">@Surfboard.Title <span class="badge bg-secondary opacity-50">Delete</span></h5>
             <p class="card-text">@Surfboard.Type</p>
@@ -36,16 +73,17 @@
             <li class="list-group-item"><span class="badge bg-secondary opacity-50">Thickness</span> @Surfboard.Thickness</li>
             <li class="list-group-item"><span class="badge bg-secondary opacity-50">Price</span> @Surfboard.Price</li>
             <li class="list-group-item"><span class="badge bg-secondary opacity-50">Equipment</span> @Surfboard.Equipment</li>
-
         </ul>
         <div class="card-body">
-            <button class="btn btn-primary" @onclick="ConfirmDelete">Confirm</button>
-            <button class="btn btn-primary" @onclick="GoBackToCard">Cancel</button>
+            <div class="btn-group" role="group" aria-label="Button Group">
+                <button type="button" class="btn btn-primary" @onclick="ConfirmDelete">Confirm</button>
+                <button type="button" class="btn btn-primary" @onclick="GoBackToCard">Cancel</button>
+			</div>
         </div>
     }
     @if (Status == "Update")
     {
-        <img src="" class="card-img-top" alt="...">
+        <img src="@Surfboard.Image" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">
                 <div class="input-group mb-3">
@@ -116,8 +154,10 @@
             </li>
         </ul>
         <div class="card-body">
-            <button class="btn btn-primary" @onclick="ConfirmUpdate">Confirm</button>
-            <button class="btn btn-primary" @onclick="GoBackToCard">Cancel</button>
+            <div class="btn-group" role="group" aria-label="Button Group">
+                <button type="button" class="btn btn-primary" @onclick="ConfirmUpdate">Confirm</button>
+                <button type="button" class="btn btn-primary" @onclick="GoBackToCard">Cancel</button>
+			</div>
         </div>
     }
 </div>
@@ -129,7 +169,38 @@
     public Surfboard Surfboard { get; set; }
     public Surfboard BeforeUpdate { get; set; }
     private string Status { get; set; } = "Card";
+    private Booking Booking { get; set; } = new Booking();
 
+    public class TimeSample
+    {
+        public DateTime date { get; set; } = DateTime.Now;
+        public DateTime time { get; set; } = DateTime.Now;
+        public DateTime combined { get { return date.Date + time.TimeOfDay; } }
+    }
+
+    private TimeSample Start = new TimeSample();
+    private TimeSample End = new TimeSample();
+
+    private void BookSurfboard()
+    {
+        Status = "Book";
+    }
+    private async Task ConfirmBook()
+    {
+        Booking.BookingDate = Start.combined;
+        Booking.ReturnDate = End.combined;
+		Booking.SurfboardId = Surfboard.Id;
+        var response = await Http.PostAsJsonAsync<Booking>("/Api/Bookings/Create", Booking);
+        if (response.IsSuccessStatusCode)
+        {
+            Status = "Card";
+            await RemoveMeFromList.InvokeAsync(Surfboard);
+            return;
+        }
+        Status = "Card";
+        return;
+    }
+	
     private void UpdateSurfboard()
     {
         Status = "Update";
@@ -142,13 +213,14 @@
     }
     private async Task ConfirmDelete()
     {
-        Status = "Card";
-        var response = await Http.DeleteAsync($"/Surfboards/Delete?id={Surfboard.Id}");
+        var response = await Http.DeleteAsync($"/Api/Surfboards/Delete?id={Surfboard.Id}");
         if (response.IsSuccessStatusCode)
         {
+            Status = "Card";
             await RemoveMeFromList.InvokeAsync(Surfboard);
             return;
         }
+        Status = "Card";
         return;
     }
     private void GoBackToCard()
@@ -157,13 +229,14 @@
     }
     private async Task ConfirmUpdate()
     {
-        Status = "Card";
-        var response = await Http.PutAsJsonAsync<Surfboard>($"/Surfboards/Update?id={Surfboard.Id}", Surfboard);
+        var response = await Http.PutAsJsonAsync<Surfboard>($"/Api/Surfboards/Update?id={Surfboard.Id}", Surfboard);
         if (response.IsSuccessStatusCode)
         {
+            Status = "Card";
             GoBackToCard();
             return;
         }
+        Status = "Card";
         Surfboard = (Surfboard)BeforeUpdate.Clone();
         return;
     }

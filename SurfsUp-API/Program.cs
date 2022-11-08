@@ -50,6 +50,7 @@ builder.Services.AddSwaggerGen(c =>
     }
 );
 });
+builder.Services.AddScoped(sp => new HttpClient());
 
 var app = builder.Build();
 

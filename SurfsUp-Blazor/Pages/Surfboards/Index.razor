@@ -6,6 +6,11 @@
     <button class="btn btn-primary" @onclick="CreateSurfboard">Create Surboard</button>
     <h1>Surfboards</h1>
     <p>Here are the surfboards we have for sale.</p>
+    <p>Interested in the weather forecast, to look out for some siiiiiick waves? <a @onclick="ToggleForecasts" style="cursor:pointer;text-decoration:underline;">Click here</a></p>
+    @if (IsForecastsShown)
+    {
+        <WeatherForecast CloseMe=@ToggleForecasts></WeatherForecast>
+    }
     @if (surfboards != null)
     {
        <SurfboardGrid Surfboards=@surfboards.Surfboards></SurfboardGrid>
@@ -19,13 +24,19 @@
 
 @code {
     private SurfboardsList? surfboards;
+    private bool IsForecastsShown { get; set; } = false;
     protected async override Task OnInitializedAsync()
     {
-        surfboards = await Http.GetFromJsonAsync<SurfboardsList>("/surfboards/read");
+        surfboards = await Http.GetFromJsonAsync<SurfboardsList>("/Api/Surfboards/Read");
+    }
+
+    private void ToggleForecasts()
+    {
+        IsForecastsShown = !IsForecastsShown;
     }
 
     private void CreateSurfboard()
     {
-        NavigationManager.NavigateTo("/Surfboards/create");
+        NavigationManager.NavigateTo("/Surfboards/Create");
     }
 }

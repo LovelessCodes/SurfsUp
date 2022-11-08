@@ -156,7 +156,7 @@ namespace SurfsUp_API.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SurfsUp_API.Areas.Identity.Data.SurfsUpUser", b =>
+            modelBuilder.Entity("SurfsUp_Models.SurfsUpUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");

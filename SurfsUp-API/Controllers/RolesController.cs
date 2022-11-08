@@ -8,7 +8,7 @@ using SurfsUp_Models;
 namespace SurfsUp_API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class RolesController : ControllerBase
     {
 

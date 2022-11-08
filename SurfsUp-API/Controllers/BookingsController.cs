@@ -7,7 +7,7 @@ using SurfsUp_Models;
 namespace SurfsUp_API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class BookingsController : Controller
     {
 
@@ -40,7 +40,7 @@ namespace SurfsUp_API.Controllers
             if (user != null)
             {
                 var bookings = from s in _context.Booking
-                               where s.UserId == user.Id select s;
+                               where s.Email == user.Email select s;
                 return Ok(await bookings.ToListAsync());
             }
             return NotFound();
@@ -52,10 +52,13 @@ namespace SurfsUp_API.Controllers
         public async Task<ActionResult> Create([FromBody] Booking booking)
         {
             var user = await userManager.GetUserAsync(User);
-            booking.UserId = user.Id;
+            if (user != null)
+            {
+                booking.Email = user.Email;
+            }
             _context.Booking.Add(booking);
             await _context.SaveChangesAsync();
-            return BadRequest();
+            return Ok(booking);
         }
 
         [ProducesResponseType(typeof(NoContentResult), 204)]
@@ -81,7 +84,7 @@ namespace SurfsUp_API.Controllers
 
 
             var user = await userManager.GetUserAsync(User);
-            booking.UserId = user.Id;
+            booking.Email = user.Email;
             if (id != booking.Id)
             {
                 return NotFound();

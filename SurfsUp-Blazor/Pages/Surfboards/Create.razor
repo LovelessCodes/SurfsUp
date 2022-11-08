@@ -20,7 +20,7 @@
 
     private async Task CreateSurfboard()
     {
-        var response = await Http.PostAsJsonAsync("/surfboards/create", surfboard);
+        var response = await Http.PostAsJsonAsync("/Api/Surfboards/Create", surfboard);
         if (response.IsSuccessStatusCode)
         {
             NavigationManager.NavigateTo("/Surfboards/index");

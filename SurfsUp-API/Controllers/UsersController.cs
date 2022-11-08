@@ -5,8 +5,8 @@ using SurfsUp_Models;
 
 namespace SurfsUp_API.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class UsersController : Controller
     {
         private readonly UserManager<SurfsUpUser> _userManager;

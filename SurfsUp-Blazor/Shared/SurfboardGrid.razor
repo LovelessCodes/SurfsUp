@@ -1,8 +1,6 @@
 ﻿@using SurfsUp_Models
-<h3>SurfboardGrid</h3>
 
-
-<div style="display:flex;flex-direction:row;">
+<div style="display:grid;grid-row-gap:10px;grid-column-gap:20px;grid-template-columns:repeat(4, auto);">
     @foreach (var s in Surfboards)
     {
         <SurfboardCard Surfboard=@s RemoveMeFromList=@Remove></SurfboardCard>
