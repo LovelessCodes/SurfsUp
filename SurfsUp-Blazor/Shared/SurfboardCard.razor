@@ -6,19 +6,16 @@
     {
         <img src="" class="card-img-top" alt="...">
         <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <h5 class="card-title">@Surfboard.Title</h5>
+            <p class="card-text">@Surfboard.Type</p>
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">Image=@Surfboard.Title</li>
-            <li class="list-group-item">Title=@Surfboard.Type</li>
-            <li class="list-group-item">Length=@Surfboard.Length</li>
-            <li class="list-group-item">Width=@Surfboard.Width</li>
-            <li class="list-group-item">Volume=@Surfboard.Volume</li>
-            <li class="list-group-item">Thickness=@Surfboard.Thickness</li>
-            <li class="list-group-item">Price=@Surfboard.Price</li>
-            <li class="list-group-item">Equipment=@Surfboard.Equipment</li>
-
+            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Length</span> @Surfboard.Length</li>
+            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Width</span> @Surfboard.Width</li>
+            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Volume</span> @Surfboard.Volume</li>
+            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Thickness</span> @Surfboard.Thickness</li>
+            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Price</span> @Surfboard.Price</li>
+            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Equipment</span> @Surfboard.Equipment</li>
         </ul>
         <div class="card-body">
             <button class="btn btn-primary" @onclick="UpdateSurfboard">Update Surboard</button>
@@ -29,18 +26,16 @@
     {
         <img src="" class="card-img-top" alt="...">
         <div class="card-body">
-            <h5 class="card-title">Confirm Deletion</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <h5 class="card-title">@Surfboard.Title <span class="badge bg-secondary opacity-50">Delete</span></h5>
+            <p class="card-text">@Surfboard.Type</p>
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">Title=@Surfboard.Title</li>
-            <li class="list-group-item">Type=@Surfboard.Type</li>
-            <li class="list-group-item">Length=@Surfboard.Length</li>
-            <li class="list-group-item">Width=@Surfboard.Width</li>
-            <li class="list-group-item">Volume=@Surfboard.Volume</li>
-            <li class="list-group-item">Thickness=@Surfboard.Thickness</li>
-            <li class="list-group-item">Price=@Surfboard.Price</li>
-            <li class="list-group-item">Equipment=@Surfboard.Equipment</li>
+            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Length</span> @Surfboard.Length</li>
+            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Width</span> @Surfboard.Width</li>
+            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Volume</span> @Surfboard.Volume</li>
+            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Thickness</span> @Surfboard.Thickness</li>
+            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Price</span> @Surfboard.Price</li>
+            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Equipment</span> @Surfboard.Equipment</li>
 
         </ul>
         <div class="card-body">
@@ -52,18 +47,73 @@
     {
         <img src="" class="card-img-top" alt="...">
         <div class="card-body">
-            <h5 class="card-title">Update</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <h5 class="card-title">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-Title">Title</span>
+                    </div>
+                    <input type="text" class="form-control" @bind-value="@Surfboard.Title" placeholder="Title" aria-label="Title" aria-describedby="basic-Title">
+                </div>
+                <span class="badge bg-secondary opacity-50">Update</span>
+            </h5>
+            <p class="card-text">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-Type">Type</span>
+                    </div>
+                    <input type="text" class="form-control" @bind-value="@Surfboard.Type" placeholder="Type" aria-label="Type" aria-describedby="basic-Type">
+                </div>
+            </p>
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item"><input @bind-value="Surfboard.Title" /></li>
-            <li class="list-group-item"><input @bind-value="Surfboard.Type" /></li>
-            <li class="list-group-item"><input @bind-value="Surfboard.Length" /></li>
-            <li class="list-group-item"><input @bind-value="Surfboard.Width" /></li>
-            <li class="list-group-item"><input @bind-value="Surfboard.Volume" /></li>
-            <li class="list-group-item"><input @bind-value="Surfboard.Thickness" /></li>
-            <li class="list-group-item"><input @bind-value="Surfboard.Price" /></li>
-            <li class="list-group-item"><input @bind-value="Surfboard.Equipment" /></li>
+            <li class="list-group-item">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-Length">Length</span>
+                    </div>
+                    <input type="text" class="form-control" @bind-value="@Surfboard.Length" placeholder="Length" aria-label="Length" aria-describedby="basic-Length">
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-Width">Width</span>
+                    </div>
+                    <input type="text" class="form-control" @bind-value="@Surfboard.Width" placeholder="Width" aria-label="Width" aria-describedby="basic-Width">
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-Volume">Volume</span>
+                    </div>
+                    <input type="text" class="form-control" @bind-value="@Surfboard.Volume" placeholder="Volume" aria-label="Volume" aria-describedby="basic-Volume">
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-Volume">Thickness</span>
+                    </div>
+                    <input type="text" class="form-control" @bind-value="@Surfboard.Thickness" placeholder="Thickness" aria-label="Thickness" aria-describedby="basic-Thickness">
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-Volume">Price</span>
+                    </div>
+                    <input type="text" class="form-control" @bind-value="@Surfboard.Price" placeholder="Price" aria-label="Price" aria-describedby="basic-Price">
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-Volume">Equipment</span>
+                    </div>
+                    <input type="text" class="form-control" @bind-value="@Surfboard.Equipment" placeholder="Equipment" aria-label="Equipment" aria-describedby="basic-Equipment">
+                </div>
+            </li>
         </ul>
         <div class="card-body">
             <button class="btn btn-primary" @onclick="ConfirmUpdate">Confirm</button>
@@ -78,7 +128,7 @@
     [Parameter]
     public Surfboard Surfboard { get; set; }
     public Surfboard BeforeUpdate { get; set; }
-    public string Status { get; set; } = "Card";
+    private string Status { get; set; } = "Card";
 
     private void UpdateSurfboard()
     {
@@ -97,7 +147,9 @@
         if (response.IsSuccessStatusCode)
         {
             await RemoveMeFromList.InvokeAsync(Surfboard);
+            return;
         }
+        return;
     }
     private void GoBackToCard()
     {
