@@ -17,8 +17,8 @@
 | 43  | Fællesuge  |   |   |
 | 44  | Krav 7 (Blazor)  |   |   |
 | 45  | Krav 8 (Blazor)  | Krav 7 (Blazor)  |   |
-| 46  |   | Krav 8 (Blazor)  |   |
-| 47  | Krav 9 (Blazor)  |   | Evaluering af sum og tilpasning  |
-| 48  |   |   |   |
+| 46  |   |   |   |
+| 47  |   | Krav 8 (Blazor)  | Evaluering af sum og tilpasning  |
+| 48  | Krav 9 (Blazor)  |   |   |
 | 49  |   | Krav 9 (Blazor)  |   |
 | 50  |   |   | Evaluering af sum  |
