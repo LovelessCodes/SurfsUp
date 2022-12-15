@@ -11,6 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurfsUp-Blazor", "..\SurfsU
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurfsUp-Models", "..\SurfsUp-Models\SurfsUp-Models.csproj", "{EE93780A-F4D8-49A8-AB4A-382754206433}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurfsUpBlazor.Server", "..\SurfsUpBlazor\SurfsUpBlazor\Server\SurfsUpBlazor.Server.csproj", "{0F96C94D-080A-4D98-B5F9-EC5C8B8E8634}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurfsUpBlazor.Shared", "..\SurfsUpBlazor\SurfsUpBlazor\Shared\SurfsUpBlazor.Shared.csproj", "{81046782-C0E1-4785-B047-2E52AFE038CC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurfsUpBlazor.Client", "..\SurfsUpBlazor\SurfsUpBlazor\Client\SurfsUpBlazor.Client.csproj", "{32508FCA-9D5B-4D3E-B0A2-EE6E0AE89952}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +39,18 @@ Global
 		{EE93780A-F4D8-49A8-AB4A-382754206433}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE93780A-F4D8-49A8-AB4A-382754206433}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE93780A-F4D8-49A8-AB4A-382754206433}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F96C94D-080A-4D98-B5F9-EC5C8B8E8634}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F96C94D-080A-4D98-B5F9-EC5C8B8E8634}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F96C94D-080A-4D98-B5F9-EC5C8B8E8634}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F96C94D-080A-4D98-B5F9-EC5C8B8E8634}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81046782-C0E1-4785-B047-2E52AFE038CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81046782-C0E1-4785-B047-2E52AFE038CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81046782-C0E1-4785-B047-2E52AFE038CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81046782-C0E1-4785-B047-2E52AFE038CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32508FCA-9D5B-4D3E-B0A2-EE6E0AE89952}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32508FCA-9D5B-4D3E-B0A2-EE6E0AE89952}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32508FCA-9D5B-4D3E-B0A2-EE6E0AE89952}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32508FCA-9D5B-4D3E-B0A2-EE6E0AE89952}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
