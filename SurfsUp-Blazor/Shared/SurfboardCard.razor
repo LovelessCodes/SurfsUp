@@ -19,37 +19,51 @@
     }
     @if (Status == "Book")
     {
-        <img src="@Surfboard.Image" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">@Surfboard.Title</h5>
-            <p class="card-text">@Surfboard.Type</p>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Length</span> @Surfboard.Length</li>
-            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Width</span> @Surfboard.Width</li>
-            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Volume</span> @Surfboard.Volume</li>
-            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Thickness</span> @Surfboard.Thickness</li>
-            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Price</span> @Surfboard.Price</li>
-            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Equipment</span> @Surfboard.Equipment</li>
-        </ul>
-        <div class="card-body">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-Email">Email</span>
+        <div class="modal fade show" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="bookModal" aria-hidden="true" style="display:flex;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content rounded-4 shadow">
+                    <div class="modal-header border-bottom-0">
+                        <h1 class="modal-title fs-5">Confirm Booking</h1>
+                        <button type="button" class="btn-close" aria-label="Close" @onclick="GoBackToCard"></button>
+                    </div>
+                    <div class="modal-body py-0">
+                        <img src="@Surfboard.Image" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">@Surfboard.Title</h5>
+                            <p class="card-text">@Surfboard.Type</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Length</span> @Surfboard.Length</li>
+                            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Width</span> @Surfboard.Width</li>
+                            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Volume</span> @Surfboard.Volume</li>
+                            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Thickness</span> @Surfboard.Thickness</li>
+                            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Price</span> @Surfboard.Price</li>
+                            <li class="list-group-item"><span class="badge bg-secondary opacity-50">Equipment</span> @Surfboard.Equipment</li>
+                        </ul>
+                        <div class="card-body">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-Email">Email</span>
+                                </div>
+                                <input type="text" class="form-control" @bind-value="@Booking.Email" placeholder="Email" aria-label="Email" aria-describedby="basic-Email">
+                            </div>
+                            <p>Start Date and Time</p>
+                            <input type="date" @bind-value="Start.date" class="form-control">
+                            <input type="time" @bind-value="Start.time" class="form-control">
+                            <p>End Date and Time</p>
+                            <input type="date" @bind-value="End.date" class="form-control">
+                            <input type="time" @bind-value="End.time" class="form-control">
+                            <div class="btn-group" role="group" aria-label="Button Group">
+                                <button type="button" class="btn btn-primary" @onclick="ConfirmBook">Book</button>
+                                <button type="button" class="btn btn-primary" @onclick="GoBackToCard">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <input type="text" class="form-control" @bind-value="@Booking.Email" placeholder="Email" aria-label="Email" aria-describedby="basic-Email">
-            </div>
-            <p>Start Date and Time</p>
-            <input type="date" @bind-value="Start.date" class="form-control">
-            <input type="time" @bind-value="Start.time" class="form-control">
-            <p>End Date and Time</p>
-            <input type="date" @bind-value="End.date" class="form-control">
-            <input type="time" @bind-value="End.time" class="form-control">
-            <div class="btn-group" role="group" aria-label="Button Group">
-                <button type="button" class="btn btn-primary" @onclick="ConfirmBook">Book</button>
-                <button type="button" class="btn btn-primary" @onclick="GoBackToCard">Cancel</button>
             </div>
         </div>
+        <div class="modal-backdrop fade show"></div>
+                        
     }
     @if (Status == "Delete")
     {
