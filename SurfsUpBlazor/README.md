@@ -14,5 +14,5 @@
 
 ## Configuration
 > Change the connection string to whichever MySQL server you'd like to use    
-> > In my experience the easiest to set up is a [SQLEXPRESS Server](https://www.microsoft.com/en-us/Download/details.aspx?id=101064)    
-> Change the `OPENWEATHERAPI_KEY` inside the `Properties/launchSettings.json` file in the Server directory 
+> *In my experience the easiest to set up is a [SQLEXPRESS Server](https://www.microsoft.com/en-us/Download/details.aspx?id=101064)*    
+> Change the `OPENWEATHERAPI_KEY` inside the `Properties/launchSettings.json` file in the Server directory     
