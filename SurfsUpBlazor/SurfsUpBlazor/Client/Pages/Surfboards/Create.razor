@@ -1,0 +1,37 @@
+﻿@page "/Surfboards/create"
+@using Microsoft.AspNetCore.Authorization
+@using SurfsUpBlazor.Shared
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject IToastService toastService
+@attribute [Authorize(Roles = "Lessor, Admin")]
+
+<input type="text" placeholder="Image URL" @bind-value="surfboard.ImageUrl" />
+<input type="text" placeholder="Name" @bind-value="surfboard.Name" />
+<input type="text" placeholder="Description" @bind-value="surfboard.Description" />
+<input type="number" placeholder="Length" @bind-value="surfboard.Length" />
+<input type="number" placeholder="Width" @bind-value="surfboard.Width" />
+<input type="number" placeholder="Volume" @bind-value="surfboard.Volume" />
+<input type="number" placeholder="Thickness" @bind-value="surfboard.Thickness" />
+<input type="text" placeholder="Type" @bind-value="surfboard.Type" />
+<input type="number" placeholder="Price" @bind-value="surfboard.Price" />
+<input type="text" placeholder="Place" @bind-value="surfboard.Place" />
+
+<button class="btn btn-primary" @onclick="CreateSurfboard">Create Surboard</button>
+
+@code 
+{
+    public Surfboard surfboard = new Surfboard();
+
+    private async Task CreateSurfboard()
+    {
+        var response = await Http.PostAsJsonAsync("/Api/Surfboards", surfboard);
+        if (response.IsSuccessStatusCode)
+        {
+            toastService.ShowSuccess("Surfboard created successfully - going back ...");
+            NavigationManager.NavigateTo("/Surfboards");
+            return;
+        }
+		toastService.ShowError("Something went wrong");
+    }
+}

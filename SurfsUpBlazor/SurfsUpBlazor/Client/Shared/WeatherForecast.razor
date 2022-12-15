@@ -1,0 +1,61 @@
+﻿@inject HttpClient Http
+@using SurfsUpBlazor.Shared
+
+<div class="modal fade show" id="weatherModal" tabindex="-1" role="dialog" aria-labelledby="weatherModal" aria-hidden="true" style="display:flex;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header border-bottom-0">
+                <h1 class="modal-title fs-5">Weather Forecast</h1>
+                <button type="button" class="btn-close" aria-label="Close" @onclick="CloseMe"></button>
+            </div>
+            <div class="modal-body py-0">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="City" @bind-value="searchCity" aria-label="City" aria-describedby="basic-City">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" @onclick="SearchCity">Search</button>
+                    </div>
+                </div>
+                @if (forecasts != null)
+                {
+                    <h2>@forecasts.city.name</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Temp. (C)</th>
+                                <th>Temp. (F)</th>
+                                <th>Summary</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var forecast in forecasts.list)
+                            {
+                                <tr>
+                                    <td>@(new DateTime().AddYears(1969).AddSeconds(forecast.dt))</td>
+                                    <td>@Math.Round(forecast.main.feels_like - 273.15, 2)</td>
+                                    <td>@Math.Round(1.8*(forecast.main.feels_like-273.15)+32, 2)</td>
+                                    <td>@forecast.weather.First().description</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade show"></div>
+
+@code {
+    private Root? forecasts;
+    [Parameter]
+    public string? searchCity { get; set; }
+    [Parameter]
+    public EventCallback CloseMe { get; set; }
+
+    private async void SearchCity()
+    {
+        forecasts = await Http.GetFromJsonAsync<Root>($"/Api/Weather?location={searchCity}");
+        StateHasChanged();
+    }
+}

@@ -1,0 +1,97 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.SignalR.Client
+@using SurfsUpBlazor.Shared
+@inject NavigationManager Navigation
+@implements IAsyncDisposable
+
+<PageTitle>Home</PageTitle>
+
+<div class="shoutbox-wrapper w-75">
+    <h2>Shoutbox</h2>
+    <ul class="shoutbox list-group d-flex flex-column-reverse" style="height: 500px; overflow: auto;">
+        @foreach (var message in _messages.Reverse()){
+            <li class="list-group-item flex-column align-items-start">
+                <div class="message d-flex flex-column">
+                    <div class="message-header d-flex flex-row justify-content-between opacity-50">
+					    <div class="message-user">
+                            @message.User
+					    </div>
+                        <div class="message-time">
+                            @message.Time
+                        </div>
+                    </div>
+                    <div class="message-body">
+                        @message.Text
+                    </div>
+				</div>
+            </li>
+        }
+    </ul>
+    <div class="input-group mb-3 ml-3 mr-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon">@@</span>
+        </div>
+        <input type="text" class="form-control" placeholder="User" aria-label="User" aria-describedby="basic-addon1" @bind="userInput" />
+    </div>
+    <div class="input-group mb-3 ml-3 mr-3">
+        <input type="text" class="form-control" placeholder="Message" aria-label="Message" aria-describedby="basic-addon1" @bind="messageInput" @onkeyup="OnEnter" />
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" @onclick="Send" disabled="@(!IsConnected)">Send</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    private HubConnection? hubConnection;
+    private IEnumerable<Message> _messages { get { return messages; } }
+    private List<Message> messages { get; set; } = new();
+    private string? userInput;
+    private string? messageInput;
+
+    protected override async Task OnInitializedAsync()
+    {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(Navigation.ToAbsoluteUri("/chathub"))
+            .Build();
+
+        hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+        {
+            messages.Add(new Message(){
+                Text = message,
+				Time = DateTime.Now,
+                User = user
+			});
+            InvokeAsync(StateHasChanged);
+        });
+
+        await hubConnection.StartAsync();
+    }
+
+    private async Task Send()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.SendAsync("SendMessage", userInput, messageInput);
+        }
+        messageInput = "";
+    }
+
+    public bool IsConnected =>
+        hubConnection?.State == HubConnectionState.Connected;
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
+    }
+
+    private async Task OnEnter(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            await Send();
+        }
+    }
+}

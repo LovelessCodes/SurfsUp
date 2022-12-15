@@ -1,0 +1,71 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using SurfsUpBlazor.Shared
+@inject HttpClient Http
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+@page "/surfboards"
+@attribute [Authorize]
+
+<div>
+    <h1>Surfboards</h1>
+    <p>Here are the surfboards that you are able to rent.</p>
+    <p>Interested in the weather forecast, to look out for some siiiiiick waves? <a @onclick="ToggleForecasts" style="cursor:pointer;text-decoration:underline;">Click here</a></p>
+    <AuthorizeView Roles="Lessor">
+        <Authorized>
+            <button class="btn btn-outline-danger" @onclick="BecomeLessor">Become User</button>
+            <button class="btn btn-outline-success" @onclick="GoToCreate">Create Surfboard</button>
+        </Authorized>
+        <NotAuthorized>
+            <button class="btn btn-outline-secondary" @onclick="BecomeLessor">Become Lessor</button>
+        </NotAuthorized>
+    </AuthorizeView>
+    @if (IsForecastsShown)
+    {
+        <WeatherForecast CloseMe=@ToggleForecasts></WeatherForecast>
+    }
+    @if (Boards != null)
+    {
+        <SurfboardGrid Surfboards=@Boards></SurfboardGrid>
+    }
+    else
+    {
+        <p><em>Loading...</em></p>
+    }
+</div>
+
+@code {
+    private List<Surfboard>? Boards;
+
+    private bool IsForecastsShown { get; set; } = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // get user
+        var user = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User;
+        // check if user is logged in and is authenticated
+        if (user?.Identity != null && user.Identity.IsAuthenticated)
+        {
+            // get boards
+            Boards = await Http.GetFromJsonAsync<List<Surfboard>>("api/surfboards");
+        }
+    }
+
+    private void ToggleForecasts()
+    {
+        IsForecastsShown = !IsForecastsShown;
+    }
+
+    private async void BecomeLessor()
+    {
+        var resp = await Http.GetAsync("/api/roles/toggle");
+        if (resp.IsSuccessStatusCode)
+        {
+            // refresh page
+			NavigationManager.NavigateTo(NavigationManager.Uri, true);
+        }
+    }
+    private void GoToCreate()
+    {
+		NavigationManager.NavigateTo("/surfboards/create");
+    }
+}
